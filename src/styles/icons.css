@@ -1,0 +1,230 @@
+@import './theme.css';
+
+/* Icon Base Styles */
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    transition: var(--transition-fast);
+}
+
+/* Icon Sizes */
+.icon-sm {
+    width: 16px;
+    height: 16px;
+}
+
+.icon-md {
+    width: 24px;
+    height: 24px;
+}
+
+.icon-lg {
+    width: 32px;
+    height: 32px;
+}
+
+/* Icon Colors */
+.icon-primary {
+    color: var(--primary);
+}
+
+.icon-secondary {
+    color: var(--secondary);
+}
+
+.icon-accent {
+    color: var(--accent);
+}
+
+.icon-light {
+    color: var(--text-light);
+}
+
+.icon-white {
+    color: var(--text-white);
+}
+
+/* Icon Backgrounds */
+.icon-bg {
+    padding: 8px;
+    border-radius: var(--radius-full);
+    background: var(--bg-light);
+}
+
+.icon-bg-primary {
+    background: var(--primary-bg);
+    color: var(--primary);
+}
+
+.icon-bg-secondary {
+    background: var(--secondary-bg);
+    color: var(--secondary);
+}
+
+.icon-bg-accent {
+    background: var(--accent-bg);
+    color: var(--accent);
+}
+
+/* Interactive Icons */
+.icon-button {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: var(--radius-full);
+    transition: var(--transition-fast);
+}
+
+.icon-button:hover {
+    transform: translateY(-1px);
+}
+
+.icon-button.primary {
+    background: var(--primary-bg);
+    color: var(--primary);
+}
+
+.icon-button.primary:hover {
+    background: var(--primary);
+    color: var(--text-white);
+}
+
+.icon-button.secondary {
+    background: var(--secondary-bg);
+    color: var(--secondary);
+}
+
+.icon-button.secondary:hover {
+    background: var(--secondary);
+    color: var(--text-white);
+}
+
+.icon-button.accent {
+    background: var(--accent-bg);
+    color: var(--accent);
+}
+
+.icon-button.accent:hover {
+    background: var(--accent);
+    color: var(--text-white);
+}
+
+/* Feature Icons */
+.feature-icon {
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    border-radius: var(--radius-xl);
+    background: var(--primary-bg);
+    color: var(--primary);
+    margin-bottom: 16px;
+}
+
+.feature-icon.secondary {
+    background: var(--secondary-bg);
+    color: var(--secondary);
+}
+
+.feature-icon.accent {
+    background: var(--accent-bg);
+    color: var(--accent);
+}
+
+/* Animated Icons */
+.icon-spin {
+    animation: spin 1s linear infinite;
+}
+
+.icon-pulse {
+    animation: pulse 2s ease infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Status Icons */
+.status-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-icon.success {
+    background: var(--secondary-bg);
+    color: var(--secondary);
+}
+
+.status-icon.warning {
+    background: var(--accent-bg);
+    color: var(--accent);
+}
+
+.status-icon.info {
+    background: var(--primary-bg);
+    color: var(--primary);
+}
+
+/* Navigation Icons */
+.nav-icon {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+    transition: var(--transition-fast);
+}
+
+.nav-icon:hover,
+.active .nav-icon {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Notification Icons */
+.notification-icon {
+    position: relative;
+    color: var(--text-light);
+    transition: var(--transition-fast);
+}
+
+.notification-icon:hover {
+    color: var(--primary);
+}
+
+.notification-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 16px;
+    height: 16px;
+    background: var(--accent);
+    color: var(--text-white);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--bg-white);
+} 

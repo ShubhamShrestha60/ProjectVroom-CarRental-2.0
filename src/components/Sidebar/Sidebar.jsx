@@ -1,53 +1,128 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import navLinks from "../../assets/dummy-data/navLinks";
+import React, { useState } from "react";
+import { NavLink, Link } from "react-router-dom";
+import { 
+    FaCar, 
+    FaTachometerAlt, 
+    FaCalendarCheck, 
+    FaList,
+    FaPlus,
+    FaSignOutAlt,
+    FaBars,
+    FaTimes
+} from "react-icons/fa";
 import "./sidebar.css";
 
+const menuItems = [
+    {
+        category: "Overview",
+        items: [
+            {
+                path: "/dashboard",
+                icon: <FaTachometerAlt />,
+                display: "Dashboard"
+            }
+        ]
+    },
+    {
+        category: "Car Management",
+        items: [
+            {
+                path: "/carmanagement",
+                icon: <FaList />,
+                display: "View Cars"
+            },
+            {
+                path: "/addCar",
+                icon: <FaPlus />,
+                display: "Add Car"
+            },
+            {
+                path: "/available",
+                icon: <FaCar />,
+                display: "Available Cars"
+            }
+        ]
+    },
+    {
+        category: "Bookings",
+        items: [
+            {
+                path: "/adminbookings",
+                icon: <FaCalendarCheck />,
+                display: "Manage Bookings"
+            }
+        ]
+    }
+];
+
 const Sidebar = () => {
-  const handleLogout = () => {
-  };
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  return (
-    <div className="sidebar">
-      <div className="sidebar__top">
-        <h2>
-          <span>
-            <i className="ri-taxi-line"></i>
-          </span>{" "}
-          Vroom
-        </h2>
-      </div>
+    const handleLogout = () => {
+        // Implement logout functionality
+        window.location.href = '/adminLogin';
+    };
 
-      <div className="sidebar__content">
-        <div className="menu">
-          <ul className="nav__list">
-            {navLinks.map((item, index) => (
-              <li className="nav__item" key={index}>
-                <NavLink
-                  to={item.path}
-                  className={(navClass) =>
-                    navClass.isActive ? "nav_active navlink" : "nav_link"
-                  }
-                >
-                  <i className={item.icon}></i>
-                  {item.display}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </div>
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
 
-        <div className="sidebar__bottom">
-          {/* Use NavLink directly for logout with 'to' prop */}
-          <NavLink to="/adminlogin" className="nav__link" onClick={handleLogout}>
-            <span>
-              <i className="ri-logout-circle-r-line"></i> Logout
-            </span>
-          </NavLink>
-        </div>
-      </div>
-    </div>
-  );
+    return (
+        <>
+            <button 
+                className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
+                onClick={toggleMobileMenu}
+            >
+                {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+            </button>
+
+            <div className={`sidebar__overlay ${isMobileMenuOpen ? 'show' : ''}`} onClick={toggleMobileMenu}></div>
+            
+            <div className={`sidebar ${isMobileMenuOpen ? 'show' : ''}`}>
+                <div className="sidebar__top">
+                    <Link to="/dashboard" className="sidebar__logo">
+                        <span className="sidebar__logo-icon">
+                            <FaCar />
+                        </span>
+                        <span className="sidebar__logo-text">Vroom</span>
+                    </Link>
+                </div>
+
+                <div className="sidebar__content">
+                    <nav className="menu">
+                        {menuItems.map((menuGroup, index) => (
+                            <div key={index} className="menu__category">
+                                <span className="menu__category-label">{menuGroup.category}</span>
+                                <ul className="nav__list">
+                                    {menuGroup.items.map((item, itemIndex) => (
+                                        <li key={itemIndex} className="nav__item">
+                                            <NavLink
+                                                to={item.path}
+                                                className={({ isActive }) => 
+                                                    isActive ? "nav__link nav__active" : "nav__link"
+                                                }
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                            >
+                                                {item.icon}
+                                                <span>{item.display}</span>
+                                            </NavLink>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                    </nav>
+
+                    <div className="sidebar__bottom">
+                        <button onClick={handleLogout} className="logout__button">
+                            <FaSignOutAlt />
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 };
 
 export default Sidebar;

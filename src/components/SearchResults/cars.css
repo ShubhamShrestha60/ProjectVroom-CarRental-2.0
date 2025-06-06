@@ -1,6 +1,8 @@
+@import '../../styles/theme.css';
+
 .cars-page {
     min-height: 100vh;
-    background-color: #f8f9fa;
+    background-color: var(--bg-light);
     padding: 40px;
 }
 
@@ -14,18 +16,19 @@
 /* Filter Section */
 .filter-section {
     width: 300px;
-    background: white;
+    background: var(--bg-white);
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
     height: fit-content;
     position: sticky;
     top: 100px;
+    border: 1px solid var(--border-light);
 }
 
 .filter-group {
     margin-bottom: 30px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-light);
     padding-bottom: 25px;
 }
 
@@ -37,7 +40,7 @@
 
 .filter-title {
     font-size: 1.1rem;
-    color: #1a1a1a;
+    color: var(--text-dark);
     margin-bottom: 20px;
     font-weight: 600;
     letter-spacing: -0.01em;
@@ -55,7 +58,7 @@
     gap: 10px;
     cursor: pointer;
     padding: 8px 0;
-    transition: all 0.2s ease;
+    transition: var(--transition-fast);
 }
 
 .filter-option:hover {
@@ -66,13 +69,13 @@
     width: 18px;
     height: 18px;
     margin: 0;
-    accent-color: rgb(128, 0, 0);
+    accent-color: var(--primary);
     cursor: pointer;
 }
 
 .filter-label {
     font-size: 0.95rem;
-    color: #4a4a4a;
+    color: var(--text-medium);
     cursor: pointer;
 }
 
@@ -84,7 +87,7 @@
 .results-count {
     margin: 0 0 25px 0;
     font-size: 0.95rem;
-    color: #666;
+    color: var(--text-light);
     font-weight: 500;
 }
 
@@ -98,25 +101,25 @@
     display: flex;
     gap: 25px;
     padding: 25px;
-    border-radius: 12px;
-    background: white;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    border-radius: var(--radius-xl);
+    background: var(--bg-white);
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-normal);
     border: 1px solid transparent;
 }
 
 .car-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
-    border-color: rgba(128, 0, 0, 0.1);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-bg);
 }
 
 .listing-car-image {
     width: 220px;
     height: 140px;
     object-fit: contain;
-    border-radius: 8px;
-    background: #f8f9fa;
+    border-radius: var(--radius-lg);
+    background: var(--bg-lighter);
 }
 
 .car-details {
@@ -130,14 +133,14 @@
     margin: 0 0 12px 0;
     font-size: 1.4rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--text-dark);
     letter-spacing: -0.01em;
 }
 
 .car-specs {
     margin: 0;
     font-size: 0.95rem;
-    color: #666;
+    color: var(--text-light);
     display: flex;
     gap: 15px;
 }
@@ -160,23 +163,24 @@
     margin: 0 0 15px 0;
     font-size: 1.5rem;
     font-weight: 600;
-    color: rgb(128, 0, 0);
+    color: var(--primary);
 }
 
 .view-details-btn {
-    color: white;
+    color: var(--text-white);
     text-decoration: none;
     font-size: 0.95rem;
-    background: rgb(128, 0, 0);
+    background: var(--primary);
     padding: 10px 20px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
+    border-radius: var(--radius-md);
+    transition: var(--transition-fast);
     font-weight: 500;
 }
 
 .view-details-btn:hover {
-    background: rgb(150, 0, 0);
+    background: var(--primary-dark);
     transform: translateY(-2px);
+    box-shadow: var(--shadow-primary);
 }
 
 @media (max-width: 1200px) {

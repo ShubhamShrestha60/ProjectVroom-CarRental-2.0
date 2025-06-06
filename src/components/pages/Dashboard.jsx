@@ -1,88 +1,179 @@
 import React, { useState, useEffect } from "react";
 import "../styles/dashboard.css";
 import axios from "axios";
+import { FaCar, FaUserFriends, FaCalendarCheck, FaChartLine } from "react-icons/fa";
 
 const Dashboard = () => {
-    const [cars, setCars] = useState([]);
-    const [totalCars, setTotalCars] = useState(0);
+    const [stats, setStats] = useState({
+        totalCars: 0,
+        activeBookings: 0,
+        totalCustomers: 0,
+        revenue: 0
+    });
+    const [recentBookings, setRecentBookings] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [carsPerPage] = useState(10); // Number of cars to display per page
+    const [totalPages, setTotalPages] = useState(1);
+    const bookingsPerPage = 10;
 
     useEffect(() => {
-        const fetchCars = async () => {
+        const fetchDashboardData = async () => {
             try {
-                const response = await axios.get(`http://localhost:3002/cars?page=${currentPage}&limit=${carsPerPage}`);
-                setCars(response.data);
-                setTotalCars(response.headers['x-total-count']);
+                // Fetch statistics
+                const statsResponse = await axios.get('http://localhost:3002/dashboard/stats');
+                setStats(statsResponse.data);
+
+                // Fetch recent bookings
+                const bookingsResponse = await axios.get(`http://localhost:3002/bookings?page=${currentPage}&limit=${bookingsPerPage}`);
+                setRecentBookings(bookingsResponse.data);
+                setTotalPages(Math.ceil(parseInt(bookingsResponse.headers['x-total-count'] || 0) / bookingsPerPage));
             } catch (error) {
-                console.error("Error fetching cars:", error);
+                console.error("Error fetching dashboard data:", error);
             }
         };
 
-        fetchCars();
-    }, [currentPage, carsPerPage]);
+        fetchDashboardData();
+    }, [currentPage]);
 
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
     };
 
-    const handleNextPage = () => {
-        if (currentPage < Math.ceil(totalCars / carsPerPage)) {
-            setCurrentPage((prevPage) => prevPage + 1);
+    const getStatusClass = (status) => {
+        switch (status.toLowerCase()) {
+            case 'active':
+                return 'status--active';
+            case 'pending':
+                return 'status--pending';
+            case 'completed':
+                return 'status--completed';
+            default:
+                return '';
         }
     };
 
-    const handlePrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage((prevPage) => prevPage - 1);
-        }
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
     };
 
-    const indexOfLastCar = currentPage * carsPerPage;
-    const indexOfFirstCar = indexOfLastCar - carsPerPage;
-    const currentCars = cars.slice(indexOfFirstCar, indexOfLastCar);
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('ne-NP', {
+            style: 'currency',
+            currency: 'NPR'
+        }).format(amount);
+    };
+    
 
     return (
         <div className="dashboard">
             <div className="dashboard__wrapper">
-                {/* Total Cars Card */}
-                <div className="single__card total__card">
-                    <div className="card__content">
-                        <h4>Total Cars</h4>
-                        <span>{totalCars}</span>
+                <div className="dashboard__title">
+                    <h2>Dashboard Overview</h2>
+                    <p>Welcome to your dashboard. Here's what's happening with your car rental business.</p>
+                </div>
+
+                <div className="dashboard__cards">
+                    <div className="single__card card--primary">
+                        <div className="card__content">
+                            <div className="card__icon">
+                                <FaCar />
+                            </div>
+                            <span className="card__title">Total Cars</span>
+                            <span className="card__value">{stats.totalCars}</span>
+                        </div>
+                    </div>
+
+                    <div className="single__card card--success">
+                        <div className="card__content">
+                            <div className="card__icon">
+                                <FaCalendarCheck />
+                            </div>
+                            <span className="card__title">Active Bookings</span>
+                            <span className="card__value">{stats.activeBookings}</span>
+                        </div>
+                    </div>
+
+                    <div className="single__card card--warning">
+                        <div className="card__content">
+                            <div className="card__icon">
+                                <FaUserFriends />
+                            </div>
+                            <span className="card__title">Total Customers</span>
+                            <span className="card__value">{stats.totalCustomers}</span>
+                        </div>
+                    </div>
+
+                    <div className="single__card card--info">
+                        <div className="card__content">
+                            <div className="card__icon">
+                                <FaChartLine />
+                            </div>
+                            <span className="card__title">Total Revenue</span>
+                            <span className="card__value">{formatCurrency(stats.revenue)}</span>
+                        </div>
                     </div>
                 </div>
 
-                {/* List of Individual Car Cards */}
-                <div className="dashboard__cards">
-                    {currentCars.map((car) => (
-                        <div key={car._id} className="single__card">
-                            <div className="card__content">
-                                <h4>{car.brand}</h4>
-                                <span>Price: {car.price}</span>
-                            </div>
-                            {car.imageUrl && (
-                                <div className="card__image">
-                                    <img src={`http://localhost:3002/${car.imageUrl}`} alt={car.brand} />
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
-
-                {/* Pagination */}
-                <div className="pagination">
-                    <button onClick={handlePrevPage} disabled={currentPage === 1}>
-                        Prev
-                    </button>
-                    {Array.from({ length: Math.ceil(totalCars / carsPerPage) }).map((_, index) => (
-                        <button key={index} onClick={() => handlePageChange(index + 1)}>
-                            {index + 1}
+                <div className="dashboard__table">
+                    <div className="table__header">
+                        <h3>Recent Bookings</h3>
+                    </div>
+                    <div className="table__content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Car</th>
+                                    <th>Pickup Date</th>
+                                    <th>Return Date</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {recentBookings.map((booking) => (
+                                    <tr key={booking._id}>
+                                        <td>{booking.email}</td>
+                                        <td>{booking.carBrand}</td>
+                                        <td>{formatDate(booking.pickupDate)}</td>
+                                        <td>{formatDate(booking.dropoffDate)}</td>
+                                        <td>{formatCurrency(booking.totalAmount)}</td>
+                                        <td>
+                                            <span className={`status ${getStatusClass(booking.status)}`}>
+                                                {booking.status}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="pagination">
+                        <button
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
                         </button>
-                    ))}
-                    <button onClick={handleNextPage} disabled={currentPage === Math.ceil(totalCars / carsPerPage)}>
-                        Next
-                    </button>
+                        {[...Array(totalPages)].map((_, index) => (
+                            <button
+                                key={index + 1}
+                                onClick={() => handlePageChange(index + 1)}
+                                className={currentPage === index + 1 ? 'active' : ''}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                        <button
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                        >
+                            Next
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

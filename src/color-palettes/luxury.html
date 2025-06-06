@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Theme - Color Palette</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+
+        .palette-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1a1a1a;
+        }
+
+        .gradient-demo {
+            height: 200px;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            background: linear-gradient(to bottom, #232526 0%, #414345 100%);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .colors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .color-card {
+            padding: 1rem;
+            border-radius: 8px;
+            color: white;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-name {
+            font-weight: 500;
+        }
+
+        .color-value {
+            font-family: monospace;
+            opacity: 0.9;
+        }
+
+        .button-demo {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #232526;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1a1b1c;
+        }
+
+        .btn-secondary {
+            background: #414345;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #2f3031;
+        }
+
+        .btn-accent {
+            background: #D4AF37;
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background: #bf9b2f;
+        }
+
+        .text-demo {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-dark {
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+
+        .text-muted {
+            color: #6c757d;
+        }
+
+        /* Gold accents */
+        .gold-accent {
+            position: relative;
+        }
+
+        .gold-accent::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 1px solid #D4AF37;
+            border-radius: 14px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="palette-container">
+        <h1>Luxury Theme</h1>
+        
+        <div class="gradient-demo gold-accent"></div>
+
+        <div class="colors-grid">
+            <div class="color-card" style="background: #232526;">
+                <span class="color-name">Primary</span>
+                <span class="color-value">#232526</span>
+            </div>
+            <div class="color-card" style="background: #414345;">
+                <span class="color-name">Secondary</span>
+                <span class="color-value">#414345</span>
+            </div>
+            <div class="color-card" style="background: #D4AF37;">
+                <span class="color-name">Accent (Gold)</span>
+                <span class="color-value">#D4AF37</span>
+            </div>
+            <div class="color-card" style="background: #1a1a1a;">
+                <span class="color-name">Text Dark</span>
+                <span class="color-value">#1a1a1a</span>
+            </div>
+        </div>
+
+        <div class="button-demo">
+            <button class="btn btn-primary">Primary Button</button>
+            <button class="btn btn-secondary">Secondary Button</button>
+            <button class="btn btn-accent">Accent Button</button>
+        </div>
+
+        <div class="text-demo gold-accent">
+            <h2 class="text-dark">Sample Text</h2>
+            <p class="text-muted">This is how the typography looks in this color scheme. The main text uses a dark gray color for optimal readability, while secondary text uses a lighter gray tone. The gold accents add a touch of luxury.</p>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,9 +1,32 @@
 import React from 'react';
 import './footer.css';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Footer = () => {
+    const location = useLocation();
+    const hiddenPaths = [
+        '/login', 
+        '/signup', 
+        '/dashboard',
+        '/settings',
+        '/addCar',
+        '/adminlogin',
+        '/adminLogin',
+        '/adminSignup',
+        '/adminsignup',
+        '/booking',
+        '/adminbookings',
+        '/available',
+        '/notification',
+        '/carmanagement'
+    ];
+
+    // If the current path is in the hiddenPaths array, don't render the footer
+    if (hiddenPaths.includes(location.pathname)) {
+        return null;
+    }
+
     return (
         <footer className="footer">
             <div className="footer-container">

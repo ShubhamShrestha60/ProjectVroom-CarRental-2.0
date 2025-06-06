@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature Theme - Color Palette</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 2rem;
+            background: #f5f6fa;
+        }
+
+        .palette-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2d3436;
+        }
+
+        .gradient-demo {
+            height: 200px;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            background: linear-gradient(to bottom, #134e5e 0%, #71b280 100%);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .colors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .color-card {
+            padding: 1rem;
+            border-radius: 8px;
+            color: white;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-name {
+            font-weight: 500;
+        }
+
+        .color-value {
+            font-family: monospace;
+            opacity: 0.9;
+        }
+
+        .button-demo {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #134e5e;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0d3b47;
+        }
+
+        .btn-secondary {
+            background: #71b280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5f9c6b;
+        }
+
+        .btn-accent {
+            background: #ff7e67;
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background: #ff6347;
+        }
+
+        .text-demo {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-dark {
+            color: #2d3436;
+            margin-bottom: 1rem;
+        }
+
+        .text-muted {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="palette-container">
+        <h1>Nature Theme</h1>
+        
+        <div class="gradient-demo"></div>
+
+        <div class="colors-grid">
+            <div class="color-card" style="background: #134e5e;">
+                <span class="color-name">Primary</span>
+                <span class="color-value">#134e5e</span>
+            </div>
+            <div class="color-card" style="background: #71b280;">
+                <span class="color-name">Secondary</span>
+                <span class="color-value">#71b280</span>
+            </div>
+            <div class="color-card" style="background: #ff7e67;">
+                <span class="color-name">Accent</span>
+                <span class="color-value">#ff7e67</span>
+            </div>
+            <div class="color-card" style="background: #2d3436;">
+                <span class="color-name">Text Dark</span>
+                <span class="color-value">#2d3436</span>
+            </div>
+        </div>
+
+        <div class="button-demo">
+            <button class="btn btn-primary">Primary Button</button>
+            <button class="btn btn-secondary">Secondary Button</button>
+            <button class="btn btn-accent">Accent Button</button>
+        </div>
+
+        <div class="text-demo">
+            <h2 class="text-dark">Sample Text</h2>
+            <p class="text-muted">This is how the typography looks in this color scheme. The main text uses a dark gray color for optimal readability, while secondary text uses a lighter gray tone.</p>
+        </div>
+    </div>
+</body>
+</html> 

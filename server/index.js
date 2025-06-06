@@ -106,9 +106,9 @@ app.post('/register', async (req, res) => {
         await user.save();
 
         try {
-            // Send verification email
-            await sendVerifyMail(user.firstName, user.email, verificationToken);
-            res.json({ message: "Your registration is successful. Please verify your email" });
+        // Send verification email
+        await sendVerifyMail(user.firstName, user.email, verificationToken);
+        res.json({ message: "Your registration is successful. Please verify your email" });
         } catch (emailError) {
             // If email fails, still create the user but inform about email issue
             console.error("Failed to send verification email:", emailError);
@@ -442,6 +442,38 @@ app.put('/updateCar/:carID', async (req, res) => {
         res.json(updatedCar);
     } catch (error) {
         res.status(500).json({ error: 'Failed to update car' });
+    }
+});
+
+// Dashboard statistics endpoint
+app.get("/dashboard/stats", async (req, res) => {
+    try {
+        // Get total cars
+        const totalCars = await Car.countDocuments();
+        
+        // Get active bookings
+        const activeBookings = await bookingModel.countDocuments({ 
+            status: "active"
+        });
+        
+        // Get total unique customers
+        const totalCustomers = await bookingModel.distinct('email').length;
+        
+        // Calculate total revenue (sum of all completed bookings)
+        const revenue = await bookingModel.aggregate([
+            { $match: { status: "completed" } },
+            { $group: { _id: null, total: { $sum: "$totalAmount" } } }
+        ]);
+
+        res.json({
+            totalCars,
+            activeBookings,
+            totalCustomers,
+            revenue: revenue.length > 0 ? revenue[0].total : 0
+        });
+    } catch (error) {
+        console.error('Error fetching dashboard stats:', error);
+        res.status(500).json({ error: "Internal server error" });
     }
 });
 

@@ -4,7 +4,7 @@
 }
 
 .main_header{
-    background: linear-gradient(to right, rgba(128, 0, 0, 0.98), rgba(90, 0, 0, 0.98));
+    background: linear-gradient(to right, rgba(19, 78, 94, 0.98), rgba(113, 178, 128, 0.98));
     position: fixed;
     top: 0;
     left: 0;
@@ -59,7 +59,7 @@ nav ul li a {
     display: inline-flex;
     align-items: center;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
     padding: 0.6rem 1.2rem;
     border-radius: 8px;
     font-size: 0.95rem;
@@ -70,10 +70,11 @@ nav ul li a {
 }
 
 nav ul li a:not(.active):hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.1);
     color: white;
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 nav .menu {
@@ -143,13 +144,13 @@ nav .menu.open span:last-child {
         right: 0;
         display: none;
         flex-direction: column;
-        background: linear-gradient(to bottom, rgba(128, 0, 0, 0.98), rgba(90, 0, 0, 0.98));
+        background: linear-gradient(to bottom, rgba(19, 78, 94, 0.98), rgba(113, 178, 128, 0.98));
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         padding: 1rem 0;
         border-radius: 0 0 16px 16px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-top: none;
     }
 
@@ -170,7 +171,8 @@ nav .menu.open span:last-child {
     }
 
     nav ul li a:hover {
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
     }
 }
 

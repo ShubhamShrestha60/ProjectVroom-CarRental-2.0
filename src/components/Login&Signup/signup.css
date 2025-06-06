@@ -1,20 +1,39 @@
+@import '../../styles/theme.css';
+
 .signup-container {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f8f9fa;
+    background: var(--bg-light);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.signup-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-primary);
+    opacity: 0.05;
+    z-index: 0;
 }
 
 .signup-form {
     width: 100%;
     max-width: 500px;
-    background: white;
+    background: var(--bg-white);
     padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    z-index: 1;
+    border: 1px solid var(--border-light);
 }
 
 .signup-logo {
@@ -27,13 +46,13 @@
 .signup-title {
     font-size: 24px;
     font-weight: 600;
-    color: #111827;
+    color: var(--text-dark);
     margin-bottom: 8px;
     text-align: center;
 }
 
 .signup-subtitle {
-    color: #6b7280;
+    color: var(--text-light);
     font-size: 16px;
     text-align: center;
     margin-bottom: 32px;
@@ -54,24 +73,25 @@
     display: block;
     font-size: 14px;
     font-weight: 500;
-    color: #374151;
+    color: var(--text-medium);
     margin-bottom: 8px;
 }
 
 .form-input {
     width: 100%;
     padding: 12px;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
     font-size: 14px;
-    color: #111827;
-    transition: all 0.2s ease;
+    color: var(--text-dark);
+    transition: var(--transition-fast);
+    background: var(--bg-white);
 }
 
 .form-input:focus {
     outline: none;
-    border-color: rgb(128, 0, 0);
-    box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.1);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-bg);
 }
 
 .password-input-container {
@@ -83,17 +103,18 @@
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: #6b7280;
+    color: var(--text-light);
     cursor: pointer;
     background: none;
     border: none;
     padding: 0;
     display: flex;
     align-items: center;
+    transition: var(--transition-fast);
 }
 
 .password-toggle:hover {
-    color: #374151;
+    color: var(--text-medium);
 }
 
 .password-strength {
@@ -103,61 +124,63 @@
 }
 
 .password-strength.weak {
-    color: #dc2626;
+    color: var(--accent);
 }
 
 .password-strength.moderate {
-    color: #d97706;
+    color: var(--accent-dark);
 }
 
 .password-strength.strong {
-    color: #059669;
+    color: var(--secondary);
 }
 
 .signup-button {
     width: 100%;
     padding: 12px;
-    background: rgb(128, 0, 0);
-    color: white;
+    background: var(--primary);
+    color: var(--text-white);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--transition-fast);
     margin-top: 8px;
 }
 
 .signup-button:hover {
-    background: rgb(150, 0, 0);
+    background: var(--primary-dark);
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(128, 0, 0, 0.2);
+    box-shadow: var(--shadow-primary);
 }
 
 .signup-button:active {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(128, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
 }
 
 .login-link {
     text-align: center;
     margin-top: 24px;
     font-size: 14px;
-    color: #6b7280;
+    color: var(--text-light);
 }
 
 .login-link a {
-    color: rgb(128, 0, 0);
+    color: var(--primary);
     text-decoration: none;
     font-weight: 500;
+    transition: var(--transition-fast);
 }
 
 .login-link a:hover {
+    color: var(--primary-dark);
     text-decoration: underline;
 }
 
 .error-message {
-    color: #dc2626;
+    color: var(--accent);
     font-size: 14px;
     margin-top: 4px;
 }
@@ -167,17 +190,18 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: white;
+    background: var(--bg-white);
     padding: 32px;
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
     text-align: center;
     width: 360px;
     z-index: 1000;
+    border: 1px solid var(--border-light);
 }
 
 .success-popup p {
-    color: #059669;
+    color: var(--secondary);
     font-size: 16px;
     font-weight: 500;
     margin: 0;

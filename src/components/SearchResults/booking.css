@@ -1,20 +1,39 @@
+@import '../../styles/theme.css';
+
 .booking-container {
     min-height: calc(100vh - 70px);
     display: flex;
     justify-content: center;
     align-items: flex-start;
     padding: 60px 20px;
-    background: #f8f9fa;
+    background: var(--bg-light);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.booking-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-primary);
+    opacity: 0.05;
+    z-index: 0;
 }
 
 .booking-form {
     width: 100%;
     max-width: 500px;
-    background: white;
+    background: var(--bg-white);
     padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    z-index: 1;
+    border: 1px solid var(--border-light);
 }
 
 .booking-logo {
@@ -26,7 +45,7 @@
 .booking-title {
     font-size: 24px;
     font-weight: 600;
-    color: #111827;
+    color: var(--text-dark);
     margin-bottom: 32px;
 }
 
@@ -37,7 +56,7 @@
 .booking-section h3 {
     font-size: 16px;
     font-weight: 600;
-    color: #374151;
+    color: var(--text-medium);
     margin-bottom: 20px;
 }
 
@@ -52,27 +71,28 @@
     position: relative;
     width: 100%;
     padding: 16px;
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--transition-fast);
     text-align: left;
 }
 
 .datetime-button:hover {
-    border-color: rgb(128, 0, 0);
+    border-color: var(--primary);
+    background: var(--primary-bg);
 }
 
 .datetime-button p {
     font-size: 12px;
-    color: #6b7280;
+    color: var(--text-light);
     margin: 0 0 4px 0;
 }
 
 .datetime-button h4 {
     font-size: 14px;
-    color: #111827;
+    color: var(--text-dark);
     margin: 0;
     font-weight: 500;
 }
@@ -82,10 +102,10 @@
     top: calc(100% + 8px);
     left: 0;
     z-index: 1000;
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
     padding: 8px;
 }
 
@@ -94,10 +114,10 @@
     top: calc(100% + 8px);
     right: 0;
     z-index: 1000;
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
     width: 180px;
     max-height: 200px;
     overflow-y: auto;
@@ -105,14 +125,14 @@
 
 .time-dropdown div {
     padding: 8px 16px;
-    color: #374151;
+    color: var(--text-medium);
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: var(--transition-fast);
 }
 
 .time-dropdown div:hover {
-    background-color: #f3f4f6;
-    color: rgb(128, 0, 0);
+    background-color: var(--primary-bg);
+    color: var(--primary);
 }
 
 .license-grid {
@@ -125,16 +145,18 @@
 .input-field {
     width: 100%;
     padding: 12px;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
     font-size: 14px;
-    color: #374151;
-    transition: border-color 0.2s ease;
+    color: var(--text-medium);
+    transition: var(--transition-fast);
+    background: var(--bg-white);
 }
 
 .input-field:focus {
     outline: none;
-    border-color: rgb(128, 0, 0);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-bg);
 }
 
 .file-input {
@@ -145,30 +167,30 @@
 .submit-button {
     width: 100%;
     padding: 16px;
-    background: rgb(128, 0, 0);
-    color: white;
+    background: var(--primary);
+    color: var(--text-white);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(128, 0, 0, 0.1);
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow-primary);
 }
 
 .submit-button:hover {
-    background: rgb(150, 0, 0);
+    background: var(--primary-dark);
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(128, 0, 0, 0.2);
+    box-shadow: var(--shadow-lg);
 }
 
 .submit-button:active {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(128, 0, 0, 0.1);
+    box-shadow: var(--shadow-primary);
 }
 
 .error-message {
-    color: #dc2626;
+    color: var(--accent);
     font-size: 14px;
     margin-top: 8px;
 }
@@ -178,19 +200,20 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: white;
+    background: var(--bg-white);
     padding: 32px;
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
     text-align: center;
     width: 360px;
     z-index: 1000;
+    border: 1px solid var(--border-light);
 }
 
 .popup-title {
     font-size: 18px;
     font-weight: 600;
-    color: #111827;
+    color: var(--text-dark);
     margin-bottom: 16px;
 }
 
@@ -198,51 +221,58 @@
     display: flex;
     justify-content: center;
     gap: 16px;
-    margin-top: 24px;
 }
 
 .popup-button {
     padding: 12px 24px;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    background: var(--bg-white);
     cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.popup-button.primary {
-    background: rgb(128, 0, 0);
-    color: white;
-    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: var(--transition-fast);
+    color: var(--text-medium);
 }
 
 .popup-button:hover {
+    background: var(--bg-light);
+    border-color: var(--border-medium);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup-button.primary {
+    background: var(--primary);
+    color: var(--text-white);
+    border-color: transparent;
 }
 
 .popup-button.primary:hover {
-    background: rgb(150, 0, 0);
+    background: var(--primary-dark);
+    box-shadow: var(--shadow-primary);
 }
 
 /* Calendar Customization */
 .react-calendar {
-    border: none !important;
-    font-family: inherit;
+    border-color: var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 8px;
 }
 
 .react-calendar__tile--active {
-    background: rgb(128, 0, 0) !important;
+    background: var(--primary) !important;
+    color: var(--text-white);
 }
 
 .react-calendar__tile--now {
-    background: #f3f4f6 !important;
+    background: var(--primary-bg);
+    color: var(--primary);
 }
 
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-    background: rgba(128, 0, 0, 0.1) !important;
+    background: var(--primary-bg);
+    color: var(--primary);
 }
 
 @media (max-width: 640px) {
@@ -253,6 +283,7 @@
     .datetime-grid,
     .license-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 
     .popup {

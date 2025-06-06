@@ -2,61 +2,146 @@
  background-color:  #0b0c28;
 } */
 
+/* Add Car page styles */
 .add-car {
-  background: #181b3a;
-  padding: 30px;
-  border-radius: 5px;
-  margin-left: 260px; /* Adjust this value according to your sidebar width */
-  margin-top: 70px; /* Set margin-top to match the height of your top navigation bar */
+  background: white;
+  margin-left: 260px;
+  margin-top: 70px;
+  padding: 24px;
+  min-height: calc(100vh - 70px);
 }
 
-  
-  .add-car__title {
-    color: #fff;
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin-bottom: 20px;
+.add-car__title {
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.add-car__form {
+  max-width: 800px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  background: white;
+  border-radius: 8px;
+}
+
+.add-car__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.add-car__form-group--full {
+  grid-column: span 2;
+}
+
+.add-car__form-group label {
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.add-car__form-group input,
+.add-car__form-group select {
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: #1a1a1a;
+  transition: all 0.2s ease;
+}
+
+.add-car__form-group input:focus,
+.add-car__form-group select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.add-car__form-group input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+}
+
+.add-car__form-group input[type="file"] {
+  padding: 8px;
+  border: 2px dashed #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+}
+
+.image-preview {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.image-preview__placeholder {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.add-car__submit-btn {
+  grid-column: span 2;
+  padding: 12px 24px;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 16px;
+}
+
+.add-car__submit-btn:hover {
+  background: #4338ca;
+}
+
+.add-car__submit-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.4);
+}
+
+@media (max-width: 1024px) {
+  .add-car {
+    margin-left: 240px;
   }
-  
+}
+
+@media (max-width: 768px) {
+  .add-car {
+    margin-left: 0;
+    margin-top: 0;
+    padding: 16px;
+  }
+
   .add-car__form {
-    display: grid;
     grid-template-columns: 1fr;
-    row-gap: 15px;
   }
-  
-  .add-car__form-group {
-    display: flex;
-    flex-direction: column;
+
+  .add-car__form-group--full {
+    grid-column: span 1;
   }
-  
-  .add-car__form-group label {
-    color: #fff;
-    margin-bottom: 5px;
-  }
-  
-  .add-car__form-group input {
-    padding: 10px;
-    border-radius: 3px;
-    border: none;
-  }
-  
+
   .add-car__submit-btn {
-    padding: 10px 20px;
-    background: var(--button-bg-color);
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+    grid-column: span 1;
   }
-  
-  .add-car__submit-btn:hover {
-    background: var(--button-hover-bg-color);
-  }
-  
-  @media (max-width: 768px) {
-    .add-car {
-      margin-left: 0; /* Reset margin for smaller screens */
-      margin-top: 0; /* Reset margin-top for smaller screens */
-    }
-  }
+}

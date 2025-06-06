@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Options</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 2rem;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #2d3436;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .palette-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+        }
+
+        .palette-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .palette-preview {
+            height: 160px;
+        }
+
+        .ocean-preview {
+            background: linear-gradient(to bottom, #2193b0 0%, #6dd5ed 100%);
+        }
+
+        .nature-preview {
+            background: linear-gradient(to bottom, #134e5e 0%, #71b280 100%);
+        }
+
+        .modern-preview {
+            background: linear-gradient(to bottom, #4776E6 0%, #8E54E9 100%);
+        }
+
+        .luxury-preview {
+            background: linear-gradient(to bottom, #232526 0%, #414345 100%);
+        }
+
+        .palette-info {
+            padding: 1.5rem;
+        }
+
+        .palette-name {
+            color: #2d3436;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .palette-description {
+            color: #6c757d;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Choose a Color Palette</h1>
+        
+        <div class="palette-grid">
+            <a href="ocean-theme.html" class="palette-card">
+                <div class="palette-preview ocean-preview"></div>
+                <div class="palette-info">
+                    <h2 class="palette-name">Ocean Theme</h2>
+                    <p class="palette-description">A fresh and modern color scheme inspired by the ocean, featuring calming blues and teals with coral accents.</p>
+                </div>
+            </a>
+
+            <a href="nature-theme.html" class="palette-card">
+                <div class="palette-preview nature-preview"></div>
+                <div class="palette-info">
+                    <h2 class="palette-name">Nature Theme</h2>
+                    <p class="palette-description">An organic and refreshing palette inspired by nature, combining deep greens with warm coral accents.</p>
+                </div>
+            </a>
+
+            <a href="modern-professional.html" class="palette-card">
+                <div class="palette-preview modern-preview"></div>
+                <div class="palette-info">
+                    <h2 class="palette-name">Modern Professional</h2>
+                    <p class="palette-description">A bold and contemporary palette with vibrant blues and purples, perfect for a modern tech-focused look.</p>
+                </div>
+            </a>
+
+            <a href="luxury.html" class="palette-card">
+                <div class="palette-preview luxury-preview"></div>
+                <div class="palette-info">
+                    <h2 class="palette-name">Luxury Theme</h2>
+                    <p class="palette-description">An elegant and sophisticated palette featuring dark grays with gold accents, ideal for luxury brands.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

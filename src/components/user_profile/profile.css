@@ -1,19 +1,37 @@
+@import '../../styles/theme.css';
+
 .profile_main {
     min-height: calc(100vh - 80px);
     padding: 32px;
-    background: #f8f9fa;
+    background: var(--bg-light);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile_main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-primary);
+    opacity: 0.02;
+    z-index: 0;
 }
 
 .profile-header {
     max-width: 1200px;
     margin: 0 auto 32px;
     padding: 32px;
-    border-radius: 12px;
-    background: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-xl);
+    background: var(--bg-white);
+    box-shadow: var(--shadow-lg);
     position: relative;
     overflow: hidden;
+    border: 1px solid var(--border-light);
+    z-index: 1;
 }
 
 .profile-header::before {
@@ -23,21 +41,21 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(to right, rgb(128, 0, 0), rgb(180, 0, 0));
+    background: var(--gradient-primary-horizontal);
 }
 
 .profile-header h1 {
-    font-size: 1.875rem; /* 30px */
+    font-size: 1.875rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--text-dark);
     margin-bottom: 8px;
     letter-spacing: -0.01em;
     line-height: 1.3;
 }
 
 .profile-header p {
-    color: #4b5563;
-    font-size: 0.938rem; /* 15px */
+    color: var(--text-medium);
+    font-size: 0.938rem;
     max-width: 600px;
     line-height: 1.5;
     margin: 0;
@@ -46,16 +64,19 @@
 .car_rented {
     max-width: 1200px;
     margin: 0 auto 32px;
-    background: white;
+    background: var(--bg-white);
     padding: 32px;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-light);
+    position: relative;
+    z-index: 1;
 }
 
 .section-title {
-    font-size: 1.25rem; /* 20px */
+    font-size: 1.25rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--text-dark);
     margin-bottom: 24px;
     display: flex;
     align-items: center;
@@ -64,7 +85,7 @@
 }
 
 .section-title svg {
-    color: rgb(128, 0, 0);
+    color: var(--primary);
     font-size: 1.25rem;
 }
 
@@ -75,17 +96,18 @@
 }
 
 .bookingcarDetail {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: var(--bg-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
     overflow: hidden;
-    transition: all 0.2s ease;
-    border: 1px solid #e5e7eb;
+    transition: var(--transition-normal);
+    border: 1px solid var(--border-light);
 }
 
 .bookingcarDetail:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-bg);
 }
 
 .car-image-container {
@@ -93,7 +115,7 @@
     width: 100%;
     height: 180px;
     overflow: hidden;
-    background: #f8f9fa;
+    background: var(--bg-lighter);
     padding: 20px;
 }
 
@@ -101,7 +123,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    transition: transform 0.3s ease;
+    transition: var(--transition-normal);
 }
 
 .bookingcarDetail:hover img {
@@ -128,14 +150,14 @@
 .car-brand {
     font-size: 1.125rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--text-dark);
     margin-bottom: 4px;
     letter-spacing: -0.01em;
 }
 
 .car-price {
     font-size: 1rem;
-    color: rgb(128, 0, 0);
+    color: var(--primary);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -148,8 +170,8 @@
     gap: 12px;
     align-items: center;
     padding: 12px;
-    background: #f8f9fa;
-    border-radius: 6px;
+    background: var(--bg-lighter);
+    border-radius: var(--radius-lg);
 }
 
 .booking-status {
@@ -157,52 +179,52 @@
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    border-radius: 6px;
+    border-radius: var(--radius-lg);
     font-size: 0.875rem;
     font-weight: 500;
     white-space: nowrap;
 }
 
 .status-not-started {
-    background: #ecfdf5;
-    color: #059669;
+    background: rgba(113, 178, 128, 0.1);
+    color: var(--secondary);
 }
 
 .status-ongoing {
-    background: #eff6ff;
-    color: #3b82f6;
+    background: var(--primary-bg);
+    color: var(--primary);
 }
 
 .status-completed {
-    background: #f3f4f6;
-    color: #6b7280;
+    background: rgba(255, 126, 103, 0.1);
+    color: var(--accent);
 }
 
 .booking-dates {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #4b5563;
+    color: var(--text-medium);
     font-size: 0.875rem;
     font-weight: 500;
 }
 
 .booking-dates svg {
-    color: rgb(128, 0, 0);
+    color: var(--primary);
     opacity: 0.8;
 }
 
 .booking_delete {
     width: 100%;
     padding: 10px 16px;
-    background: white;
-    border: 1px solid rgb(128, 0, 0);
-    border-radius: 6px;
-    color: rgb(128, 0, 0);
+    background: var(--bg-white);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-lg);
+    color: var(--accent);
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--transition-normal);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -210,10 +232,10 @@
 }
 
 .booking_delete:hover {
-    background: rgb(128, 0, 0);
-    color: white;
+    background: var(--accent);
+    color: var(--text-white);
     transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(128, 0, 0, 0.15);
+    box-shadow: 0 2px 6px rgba(255, 126, 103, 0.2);
 }
 
 .booking_delete svg {
@@ -224,31 +246,34 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 32px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: var(--bg-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-light);
+    position: relative;
+    z-index: 1;
 }
 
 .logout_submit {
     padding: 10px 20px;
-    background: rgb(128, 0, 0);
-    color: white;
+    background: var(--primary);
+    color: var(--text-white);
     border: none;
-    border-radius: 6px;
+    border-radius: var(--radius-lg);
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 2px rgba(128, 0, 0, 0.1);
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow-primary);
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
 .logout_submit:hover {
-    background: rgb(150, 0, 0);
+    background: var(--primary-dark);
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(128, 0, 0, 0.15);
+    box-shadow: var(--shadow-lg);
 }
 
 /* Loading State */
@@ -260,15 +285,15 @@
 .loading-spinner {
     width: 40px;
     height: 40px;
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid rgb(128, 0, 0);
-    border-radius: 50%;
+    border: 2px solid var(--border-light);
+    border-top: 2px solid var(--primary);
+    border-radius: var(--radius-full);
     animation: spin 1s linear infinite;
     margin: 0 auto 16px;
 }
 
 .loading-state p {
-    color: #4b5563;
+    color: var(--text-medium);
     font-size: 0.938rem;
     font-weight: 500;
 }
@@ -280,7 +305,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(19, 78, 94, 0.4);
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
@@ -289,29 +314,30 @@
 }
 
 .popup-content {
-    background: white;
+    background: var(--bg-white);
     padding: 32px;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
     width: 380px;
     text-align: center;
+    border: 1px solid var(--border-light);
 }
 
 .popup-content svg {
     margin-bottom: 16px;
-    color: #4b5563;
+    color: var(--text-medium);
 }
 
 .popup-title {
     font-size: 1.25rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--text-dark);
     margin-bottom: 12px;
     letter-spacing: -0.01em;
 }
 
 .popup-content p {
-    color: #4b5563;
+    color: var(--text-medium);
     font-size: 0.938rem;
     line-height: 1.5;
     margin-bottom: 8px;
@@ -326,42 +352,42 @@
 
 .popup-button {
     padding: 10px 20px;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--transition-normal);
     min-width: 120px;
 }
 
 .popup-button.primary {
-    background: rgb(128, 0, 0);
-    color: white;
+    background: var(--primary);
+    color: var(--text-white);
     border: none;
 }
 
 .popup-button.secondary {
-    background: white;
-    color: #4b5563;
+    background: var(--bg-white);
+    color: var(--text-medium);
 }
 
 .popup-button:hover {
     transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-md);
 }
 
 .popup-button.primary:hover {
-    background: rgb(150, 0, 0);
-    box-shadow: 0 2px 8px rgba(128, 0, 0, 0.15);
+    background: var(--primary-dark);
+    box-shadow: var(--shadow-primary);
 }
 
 .no-bookings {
     text-align: center;
     padding: 48px 32px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    color: #4b5563;
+    background: var(--bg-lighter);
+    border-radius: var(--radius-xl);
+    color: var(--text-medium);
 }
 
 .no-bookings p {
@@ -379,6 +405,7 @@
     100% { transform: rotate(360deg); }
 }
 
+/* Responsive Styles */
 @media (max-width: 1200px) {
     .profile_main {
         padding: 28px;
@@ -419,7 +446,9 @@
         padding: 20px;
     }
 
-    .profile-header {
+    .profile-header,
+    .car_rented,
+    .logout {
         padding: 24px;
     }
 
@@ -429,11 +458,6 @@
 
     .profile-header p {
         font-size: 0.875rem;
-    }
-
-    .car_rented,
-    .logout {
-        padding: 24px;
     }
 
     .section-title {
@@ -473,7 +497,7 @@
 
     .popup-button {
         padding: 8px 16px;
-        font-size: 0.875rem;
+        font-size: 0.813rem;
         min-width: 100px;
     }
 }

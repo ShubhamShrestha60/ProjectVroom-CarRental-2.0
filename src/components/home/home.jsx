@@ -141,6 +141,7 @@ export const Home = ({setResults}) => {
             </div>
 
             <div className="guide_main">
+                <div className="decorative-top"></div>
                 <div className="guide">
                     <h3>How It Works</h3>
                     <div className="content">
