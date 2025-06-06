@@ -32,13 +32,14 @@ export default function AdminSignup() {
       return;
     }
 
-    axios.post('http://localhost:3002/signup', formData)
+    axios.post('http://localhost:3002/adminSignup', formData)
       .then(response => {
         console.log(response.data);
         navigate('/adminLogin');
       })
       .catch(error => {
         console.error('Error:', error);
+        setPasswordError('Signup failed. Please try again.');
       });
   };
 

@@ -19,35 +19,33 @@ export const Navbar = ({ isLoggedIn }) => {
 
   return (
     <div className="main_header">
-    <nav className="nav-container">
-      <Link to="/" className="title">
-        Vroom
-      </Link>
-      <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <ul className={menuOpen ? "open" : ""}>
-        
-        <li>
-          <NavLink to="/home#guide">How it works?</NavLink>
-        </li>
-        {isLoggedIn ? ( // Render profile if user is logged in
+      <nav className="nav-container">
+        <Link to="/" className="title">
+          Vroom
+        </Link>
+        <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul className={menuOpen ? "open" : ""}>
+          {isLoggedIn ? (
             <li>
               <NavLink to="/profile">Profile</NavLink>
             </li>
           ) : (
             <li>
-              <p><Link to="/login">Login/Signup</Link></p>
+              <Link to="/login">Login/Signup</Link>
             </li>
           )}
-      </ul>
-    </nav>
+        </ul>
+      </nav>
     </div>
   );
 };
+
 Navbar.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
 };
+
 export default Navbar;

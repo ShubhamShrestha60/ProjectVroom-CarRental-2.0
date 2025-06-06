@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Filter from "./filter";
 import Listing from "./listing";
 import PropTypes from 'prop-types';
+import './cars.css';
 
 const Cars = ({ results }) => {
 
@@ -48,46 +49,21 @@ const Cars = ({ results }) => {
     return filteredResults;
   };
   
-
-    const styles = {
-          
-          submain:{
-             
-            display:"flex",
-            flexDirection:"row",
-            width:"100%",
-            
-          },
-
-          filter:{
-             
-            flex:"0.4",
-            
-         
-          },
-
-          listing:{
-            flex:"1.5"
-          }
-    };
-
-    return (
-      
-        <div style={{width:"100%"}}>
-             
-             <div className="submain" style={styles.submain}>
-             <div className="filter" style={styles.filter}>
-             <Filter
+  return (
+    <div className="cars-page">
+      <div className="cars-container">
+        <div className="filter-section">
+          <Filter
             filters={filters}
             onFilterChange={handleFilterChange}
           />
-             </div>
-             <div className="listing" style={styles.listing}>
-             <Listing results={filterResults()} />
-             </div>
-             </div>  
         </div>
-    );
+        <div className="listing-section">
+          <Listing results={filterResults()} />
+        </div>
+      </div>
+    </div>
+  );
 };
 Cars.propTypes = {
   results: PropTypes.array.isRequired,

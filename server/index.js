@@ -1,5 +1,5 @@
-
 /*global require*/
+require('dotenv').config();
 const express = require("express");
 const multer = require('multer');
 const mongoose = require("mongoose");
@@ -13,6 +13,12 @@ const app = express();
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+
+// Verify email configuration
+if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    console.error('Email configuration is missing. Please check your .env file');
+    console.log('Expected environment variables: EMAIL_USER, EMAIL_PASS');
+}
 
 app.use('/uploads', express.static('uploads'));
 app.use(express.json());
@@ -44,39 +50,50 @@ app.post("/login", async (req, res) => {
     }
 });
 
-
-
 // Nodemailer transporter for sending emails
 const transporter = nodemailer.createTransport({
     service: "gmail",
+    host: "smtp.gmail.com",
     port: 587,
-    secure: true,
-    logger:true,
-    dubug:true,
-    secureConnection:false,
+    secure: false,
     auth: {
-        user: "pratikpanthi100@gmail.com", // <-- Your email address
-        pass: "kxio tjem dbet eeba" // <-- Your email password
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     },
-    tls:{
-        rejectUnauthorized: true
+    tls: {
+        rejectUnauthorized: false
+    }
+});
+
+// Verify transporter connection
+transporter.verify(function(error, success) {
+    if (error) {
+        console.error('Email transporter verification failed:', error);
+    } else {
+        console.log('Email server is ready to send messages');
     }
 });
 
 // Function to send verification email
 const sendVerifyMail = async (name, email, verificationToken) => {
     try {
+        if (!process.env.EMAIL_USER) {
+            throw new Error('Sender email is not configured');
+        }
+
         const mailOptions = {
-            from: "pratikpanthi100@gmail.com", // <-- Your email address
+            from: process.env.EMAIL_USER,
             to: email,
             subject: "Verification mail",
             html: `<p>Hi ${name}, please click <a href="http://localhost:3002/verify?id=${verificationToken}">here</a> to verify your email.</p>`
         };
 
-        await transporter.sendMail(mailOptions);
-        console.log("Email has been sent.");
+        const info = await transporter.sendMail(mailOptions);
+        console.log("Email sent successfully:", info.response);
+        return true;
     } catch (error) {
         console.error("Error sending email:", error);
+        throw error; // Re-throw to handle in the registration endpoint
     }
 };
 
@@ -84,14 +101,22 @@ const sendVerifyMail = async (name, email, verificationToken) => {
 app.post('/register', async (req, res) => {
     try {
         const user = await userModel.create(req.body);
-        const verificationToken = crypto.randomBytes(20).toString('hex'); // Generate a random token
+        const verificationToken = crypto.randomBytes(20).toString('hex');
         user.verificationToken = verificationToken;
         await user.save();
 
-        // Send verification email
-        await sendVerifyMail(user.firstName, user.email, verificationToken);
-
-        res.json({ message: "Your registration is successful. Please verify your email" });
+        try {
+            // Send verification email
+            await sendVerifyMail(user.firstName, user.email, verificationToken);
+            res.json({ message: "Your registration is successful. Please verify your email" });
+        } catch (emailError) {
+            // If email fails, still create the user but inform about email issue
+            console.error("Failed to send verification email:", emailError);
+            res.json({ 
+                message: "Registration successful but verification email failed to send. Please contact support.",
+                userId: user._id 
+            });
+        }
     } catch (err) {
         console.error("Error registering user:", err);
         res.status(500).json({ message: "Your registration has failed" });
@@ -119,9 +144,6 @@ app.get('/verify', async (req, res) => {
     }
 });
 
-
-
-
 app.post('/addCar', upload.single('image'), async (req, res) => {
     try {
         const { carID, brand, fuelType, transitionType, segment, price, location, availability, condition } = req.body;
@@ -136,11 +158,6 @@ app.post('/addCar', upload.single('image'), async (req, res) => {
     }
 });
 
-
-
-
-
-
 app.post("/adminLogin", (req, res) => {
     const { email, password } = req.body;
     admModel.findOne({ email: email })
@@ -148,7 +165,6 @@ app.post("/adminLogin", (req, res) => {
             if (admin) {
                 if (admin.password === password) {
                     res.json("Success");
-
                 } else {
                     res.json("Incorrect password");
                 }
@@ -161,16 +177,18 @@ app.post("/adminLogin", (req, res) => {
         });
 });
 
-app.post('/signup', (req, res) => {
+// Admin signup endpoint
+app.post("/adminSignup", (req, res) => {
     const { password, confirmPassword } = req.body;
     if (password !== confirmPassword) {
         return res.status(400).json("Passwords do not match");
     }
 
-    userModel.create(req.body)
+    admModel.create(req.body)
         .then(admin => res.json(admin))
         .catch(err => res.status(500).json(err));
 });
+
 app.use(bodyParser.json());
 
 app.delete('/deleteCar/:carID', async (req, res) => {
@@ -187,7 +205,6 @@ app.delete('/deleteCar/:carID', async (req, res) => {
         res.status(500).json({ message: 'Failed to delete car', error: error.message });
     }
 });
-
 
 // Endpoint to search for available vehicles based on pickup location
 app.post("/home", async (req, res) => {
@@ -233,7 +250,6 @@ app.post('/carDetails', async (req, res) => {
     }
 });
 
-
 const sendBookingSuccessEmail = async (email, bookingID) => {
     try {
         const mailOptions = {
@@ -277,8 +293,6 @@ app.post('/booking', upload.single('image'), async (req, res) => {
         res.status(500).json({ error: 'internal server error' });
     }
 });
-
-
 
 app.post('/bookingDetails', async (req, res) => {
     try {
@@ -328,14 +342,6 @@ app.delete('/cancelBooking/:bookingID', async (req, res) => {
         res.status(500).json({ message: 'Failed to cancel booking', error: error.message });
     }
 });
-
-
-
-
-
-
-
-
 
 // Endpoint to fetch all cars
 app.get("/cars", async (req, res) => {
@@ -426,7 +432,6 @@ app.get("/cars/available", async (req, res) => {
     }
 });
 
-
 // Update car details including image
 app.put('/updateCar/:carID', async (req, res) => {
     const { carID } = req.params;
@@ -439,13 +444,6 @@ app.put('/updateCar/:carID', async (req, res) => {
         res.status(500).json({ error: 'Failed to update car' });
     }
 });
-
-
-
-
-
-
-
 
 app.listen(3002, () => {
     console.log("server is running");

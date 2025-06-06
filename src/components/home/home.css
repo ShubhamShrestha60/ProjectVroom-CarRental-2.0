@@ -1,254 +1,369 @@
-
-*{
+* {
     font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-
 .main {
-    
-    
+    min-height: 100vh;
     display: grid;
-    
-    
-    grid-template-rows: auto auto auto auto;
-    grid-gap: 40px;
-    margin: auto; 
-    color:whitesmoke;
-    background-color: rgba(128, 0, 0, 0.9);
-    
+    grid-template-rows: auto auto;
+    background: linear-gradient(to bottom, rgb(128, 0, 0) 0%, rgb(90, 0, 0) 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.search_main {
+    padding: 160px 20px 80px;
+    text-align: center;
+    position: relative;
+    background: transparent;
+}
+
+.search_main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 100% 100%, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 10px, transparent 10px),
+        radial-gradient(circle at 0 0, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 10px, transparent 10px),
+        linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.03) 75%, rgba(255,255,255,0.03)),
+        linear-gradient(-45deg, rgba(255,255,255,0.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.03) 75%, rgba(255,255,255,0.03));
+    background-size: 40px 40px, 40px 40px, 40px 40px, 40px 40px;
+    background-position: 0 0, 20px 20px, 0 0, 0 0;
+    opacity: 0.7;
+    z-index: 1;
+}
+
+.search_main::after {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    right: -100px;
+    bottom: -100px;
+    background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.1) 0%, transparent 70%);
+    z-index: 0;
+}
+
+.search_main > * {
+    position: relative;
+    z-index: 2;
+}
+
+.search_main h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background: linear-gradient(to bottom, #ffffff, rgba(255,255,255,0.9));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+}
+
+.search_main p {
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+    font-weight: 300;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .search {
-    
-    max-width: 1200px;
+    max-width: 800px;
     height: 72px;
-    background-color: orange;
-    align-items: center;
+    background: rgba(255, 255, 255, 0.98);
+    padding: 0 10px;
+    border-radius: 12px;
     display: flex;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-    gap: 0.5vh;
-    
-    padding-left: 7px;
-    padding-right: 7px;
+    gap: 10px;
+    margin: 0 auto;
+    align-items: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.input-container {
+    flex: 1;
     position: relative;
-    margin: auto;
 }
 
 .input {
-    height: 63px;
-    flex: 1.5;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    text-align: center;
-    margin: auto;
-    font-size: 17px;
-    font-family: 'Poppins', sans-serif;
-    
-    box-sizing: border-box;
-}
-.input:hover{
-    border: 1px solid maroon;
+    width: 100%;
+    height: 52px;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    padding: 0 15px;
+    font-size: 0.95rem;
+    background: white;
 }
 
-.search_button{
-    flex: 0.4;
-    margin: auto;
-    background-color: rgba(167, 13, 13, 0.9);
+.input:hover, .input:focus {
+    border-color: rgb(128, 0, 0);
+    outline: none;
+}
+
+.search_button {
+    min-width: 120px;
+    height: 52px;
+    background: rgb(128, 0, 0);
     color: white;
-}
-.search_button:hover{
-    background-color: rgba(128, 0, 0, 0.9);
-}
-
-button {
-    height: 63px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.search_button:hover {
+    background: #990000;
+}
+
+.guide_main {
+    background: #ffffff;
+    padding: 50px 30px;
     position: relative;
-    margin: auto;
+    margin-top: -20px;
+    overflow: hidden;
 }
 
-.pickup_error-message{
+.guide_main::before {
+    content: '';
     position: absolute;
-    top: calc(100%);
-    /* left: -200px; */
-    z-index: 1000;
-    color: red;
-    font-family: 'Poppins', sans-serif;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: 
+        linear-gradient(135deg, rgba(128, 0, 0, 0.03) 0%, rgba(128, 0, 0, 0.01) 100%),
+        radial-gradient(circle at 20% 20%, rgba(128, 0, 0, 0.025) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(128, 0, 0, 0.025) 0%, transparent 50%);
+    z-index: 1;
 }
-.dropoff_error-message{
+
+.guide_main::after {
+    content: '';
     position: absolute;
-    top: calc(100%);
-    left: 450px;
-    z-index: 1000;
-    color: red;
-    font-family: 'Poppins', sans-serif;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background-image: 
+        linear-gradient(45deg, rgba(128, 0, 0, 0.02) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(128, 0, 0, 0.02) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(128, 0, 0, 0.02) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(128, 0, 0, 0.02) 75%);
+    background-size: 40px 40px;
+    background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+    z-index: 1;
+    opacity: 0.5;
 }
-
-
 
 .guide {
-    color: black;
-    margin-top: 20px;
-    width: 100%;
     max-width: 1200px;
-    margin: auto;
-    
-    
-}
-.guide_main{
-    background-color:white; 
-    
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
-.img {
-    width: 150px;
-    height: 150px;
+.guide h3 {
+    color: #1a1a1a;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 80px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.guide h3::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, transparent, rgb(128, 0, 0), transparent);
 }
 
 .content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    justify-content: center;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    position: relative;
+}
+
+.step {
+    text-align: center;
+    position: relative;
+    padding: 40px 20px;
+    background: white;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.step::before {
+    content: attr(data-step);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgb(128, 0, 0);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(128, 0, 0, 0.2);
+    border: 3px solid white;
 }
 
-.pickup_suggestions {
+.step::after {
+    content: '';
     position: absolute;
-    top: calc(100% + 5px); /* Position the suggestions just below the input field */
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(135deg, rgb(128, 0, 0), rgba(128, 0, 0, 0.3));
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+}
+
+.step:hover::after {
+    opacity: 1;
+}
+
+.img {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 25px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    filter: brightness(0.95);
+}
+
+.step:hover .img {
+    transform: scale(1.1);
+}
+
+.step h3 {
+    color: #1a1a1a;
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-align: center;
+    transform: none;
     left: 0;
-    width: 35%;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    list-style-type: none;
-    padding: 0;
+}
+
+.step h3::after {
+    display: none;
+}
+
+.step p {
+    color: #4b5563;
+    font-size: 0.95rem;
+    line-height: 1.6;
     margin: 0;
-    color: black;
-    z-index: 1000;
 }
 
-.pickup_suggestions li {
-    padding: 8px 16px;
+.pickup_suggestions, .dropoff_suggestions {
+    position: absolute;
+    width: 100%;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    z-index: 1000;
+    top: calc(100% + 5px);
+}
+
+.pickup_suggestions li, .dropoff_suggestions li {
+    padding: 10px 15px;
     cursor: pointer;
+    color: #333;
+    transition: background-color 0.2s ease;
+    list-style: none;
 }
 
-.pickup_suggestions li:hover {
-    background-color: #f5f5f5;
+.pickup_suggestions li:hover, .dropoff_suggestions li:hover {
+    background: #f8f9fa;
+    color: rgb(128, 0, 0);
 }
-.dropoff_suggestions {
+
+.pickup_error-message, .dropoff_error-message {
     position: absolute;
-    top: calc(100% + 5px); /* Position the suggestions just below the input field */
-    left: 38vw;
-    width: 35%;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    color: black;
-    z-index: 1000;
+    top: 100%;
+    left: 0;
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-top: 5px;
 }
 
-.dropoff_suggestions li {
-    padding: 8px 16px;
-    cursor: pointer;
+@media (max-width: 1024px) {
+    .guide_main {
+        padding: 80px 20px;
+    }
+
+    .content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 60px 30px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .guide h3 {
+        font-size: 2rem;
+        margin-bottom: 60px;
+    }
 }
 
-.dropoff_suggestions li:hover {
-    background-color: #f5f5f5;
-}
-
-
-@media (max-width:1024px){
-    .main{
-        
-        
-        align-items: center;
-        width: 100%;
-        min-width: 250px;
-        
-        margin: auto;
-        z-index: 0;
+@media (max-width: 640px) {
+    .guide_main {
+        padding: 60px 20px;
     }
 
-    .searchMain{
-        width: 90vw;
-        margin: auto;
-        z-index: 1;
-        
+    .content {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        gap: 50px;
     }
 
-    .search{
-        height: 200px;
-        display: flex;
-        flex-direction: column;
-        left: -2vw;
-        width: 90vw;
-        margin: auto;
-        align-items: center;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        z-index: 2;
-        
+    .guide h3 {
+        font-size: 1.8rem;
+        margin-bottom: 50px;
     }
 
-    .input{
-        flex:20%;
-        width: 88vw;
-        text-align: center;
-        margin: auto;
-        padding-right: 10px;
+    .step {
+        padding: 35px 20px;
     }
-    
-    .search_button{
-        flex: 15%;
-        width: 88vw;
-        margin: auto;
-    }
-
-    .pickup_suggestions {
-        
-        top: calc(20% + 5px); 
-        left: 10px;
-        width: 89vw;    
-    }
-
-    .dropoff_suggestions {
-        
-        top: calc(40% + 5px); 
-        left: 10px;
-        width: 89vw;
-        
-    }
-    .pickup_error-message{
-    position: absolute;
-    z-index: 1000;
-    color: red;
-   
-    font-family: 'Poppins', sans-serif;
-}
-.dropoff_error-message{
-    position: absolute;
-    top: calc(80%);
-    left: 450px;
-    z-index: 1000;
-    color: red;
-    font-family: 'Poppins', sans-serif;
-}
-    
-    
 } 
 

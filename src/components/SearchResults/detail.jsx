@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-
+import { FaGasPump, FaCar, FaCogs, FaCheckCircle, FaInfoCircle } from 'react-icons/fa';
+import './detail.css';
 
 const Detail = () => {
     const { carID } = useParams();
@@ -11,196 +12,118 @@ const Detail = () => {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
     useEffect(() => {
-      const fetchCarDetails = async () => {
-        try {
-            // Make an HTTP POST request to your backend server
-            const response = await axios.post('http://localhost:3002/carDetails', { carID: carID });
-            // Assuming the response.data contains the car details
-            setCarDetails(response.data);
-            localStorage.setItem('carDetails', JSON.stringify(response.data));
-        } catch (error) {
-            console.error('Error fetching car details:', error);
-        }
-    };
+        const fetchCarDetails = async () => {
+            try {
+                const response = await axios.post('http://localhost:3002/carDetails', { carID: carID });
+                setCarDetails(response.data);
+                localStorage.setItem('carDetails', JSON.stringify(response.data));
+            } catch (error) {
+                console.error('Error fetching car details:', error);
+            }
+        };
 
         fetchCarDetails();
     }, [carID]);
-     
 
-    const styles ={
-            main:{
-                 marginLeft:"100px",
-                 backgroundColor:"white",
-                 color:"black",
-                 height:"80vh"
-            },
-           sub_main:{
-            marginTop:"50px",
-               display:"flex"
-           },
-           
-           detail:{
-            flex:"0.7",
-            display:"flex",
-            flexDirection:"column"
-           },
-
-           image:{
-            flex:"1",
-           },
-           img:{
-              height:"300px"
-           },
-           information:{
-
-            flex: "1",
-            display:"grid",
-            marginTop:"-7px",
-            gridTemplateColumns:"150px 100px 100px 100px",
-            gridGap:"10px",
-           boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)", 
-           padding: "10px", 
-           borderRadius: "5px" ,
-           border:"2px solid white"
-           },
-           payment:{
-            flex:"1",
-            marginLeft:"100px"
-           
-           },
-           do_payment:{
-           
-            margin:"center",
-            height:"400px",
-            width:"400px",
-            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)", 
-           padding: "10px", 
-           borderRadius: "5px" ,
-           display:'grid',
-           gridTemplateRows:"1fr 0.1fr",
-           },
-           text_part:{
-                 textAlign:"center"
-           
-           },
-           place_order:{
-            
-           },
-           rent_button:{
-            width:"100%",
-            backgroundColor:"maroon",
-            color:"white"
-           },
-           popup:{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: 'white',
-            padding: '20px',
-            border: '1px solid #ccc',
-            borderRadius: '5px',
-            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-            zIndex: '1000',
-            
-           },
-
-           option:{
-            display:"grid",
-            gridTemplateColumns:"1fr 1fr",
-            marginTop:"20px"
-           }
-
-    }
-
-   
     const handleBooking = () => {
         if (isLoggedIn) {
-            // Navigate to the booking page with carID as state
             navigate(`/booking`, { state: { carID: carDetails.carID } });
         } else {
-            // Show login popup
             setShowLoginPopup(true);
         }
     };
 
     const handleLoginClick = () => {
-        // Navigate to login page
         navigate('/login');
     };
 
-
-
+    if (!carDetails) {
+        return (
+            <div className="detail-page">
+                <div className="loading-state">
+                    <div className="loading-spinner"></div>
+                    <p>Loading car details...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <div className='main' style={styles.main}>
-
-           
-
-
-
-
-
-            
-            {carDetails && (
-                <div className='sub_main' style={styles.sub_main}>
-
-                <div className='detail' style={styles.detail}>
-                  <div className='image' style={styles.image}>
-                    <img src={`http://localhost:3002/${carDetails.imageUrl}`} alt={`Image of ${carDetails.brand}`}  style={styles.img}/></div>
-                    <div className='information' style={styles.information}>
-                        <div className='contition'>
-                        <h4>Condition</h4>
-                        <p>{carDetails.condition}</p>
+        <div className="detail-page">
+            <div className="detail-container">
+                <div className="car-section">
+                    <div className="car-header">
+                        <h1>{carDetails.brand}</h1>
+                        <div className="car-tags">
+                            <span className="tag"><FaCar /> {carDetails.segment}</span>
+                            <span className="tag"><FaGasPump /> {carDetails.fuelType}</span>
+                            <span className="tag"><FaCogs /> {carDetails.transitionType}</span>
                         </div>
-
-                        <div className='segment'>
-                        <h4>Segment</h4>
-                        <p>{carDetails.segment}</p>
-                        </div>
-
-                        <div className='fuel_type'>
-                        <h4>Condition</h4>
-                        <p>{carDetails.fuelType}</p>
-                        </div>
-
-                        <div className='brand'>
-                        <h4>Brand</h4>
-                        <p>{carDetails.brand}</p>
-                        </div>
-                        
-                </div>
-                          
-                </div>
-
-                
-                  
-                <div className='info' style={styles.payment}>
-                  <div className='do_payment' style={styles.do_payment}>
-                     <div className='text_part' style={styles.text_part}>
-                     <h1>{carDetails.price}/day</h1>
-
-                     </div>
-
-                     <div className='place_order' style={styles.place_order}>
-                     
-                      <button  style={styles.rent_button} onClick={handleBooking}> Rent Now</button>
-                     </div>
-                     
-                     {showLoginPopup && (
-                <div className="popup" style={styles.popup}>
-                    <p>Please log in or sign up to continue.</p>
-                    <div className='option' style={styles.option}>
-                    <button onClick={handleLoginClick} style={{width:"100px"}}>Login/Signup</button>
-                    <button onClick={() => setShowLoginPopup(false)} style={{width:"100px"}}>Close</button>
                     </div>
-                    
-                </div>
-            )}
-                  </div>
 
+                    <div className="car-image">
+                        <img 
+                            src={`http://localhost:3002/${carDetails.imageUrl}`} 
+                            alt={carDetails.brand} 
+                        />
+                    </div>
+
+                    <div className="car-info-grid">
+                        <div className="info-item">
+                            <h4>Condition</h4>
+                            <p><FaCheckCircle /> {carDetails.condition}</p>
+                        </div>
+                        <div className="info-item">
+                            <h4>Segment</h4>
+                            <p><FaCar /> {carDetails.segment}</p>
+                        </div>
+                        <div className="info-item">
+                            <h4>Fuel Type</h4>
+                            <p><FaGasPump /> {carDetails.fuelType}</p>
+                        </div>
+                        <div className="info-item">
+                            <h4>Brand</h4>
+                            <p><FaInfoCircle /> {carDetails.brand}</p>
+                        </div>
+                    </div>
                 </div>
-             </div>
+
+                <div className="pricing-section">
+                    <div className="pricing-card">
+                        <div className="price-display">
+                            <h1>
+                                <span className="currency">Rs</span>
+                                {carDetails.price}
+                                <span className="period">/day</span>
+                            </h1>
+                        </div>
+                        <button className="rent-button" onClick={handleBooking}>
+                            Rent Now
+                        </button>
+                        <div className="pricing-info">
+                            <p>✓ Free cancellation up to 24h before pickup</p>
+                            <p>✓ Zero security deposit</p>
+                            <p>✓ 24/7 customer support</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {showLoginPopup && (
+                <div className="login-popup">
+                    <div className="popup-content">
+                        <FaInfoCircle size={24} color="#666" />
+                        <p className="popup-message">Please log in or sign up to continue with your booking.</p>
+                        <div className="popup-buttons">
+                            <button className="popup-button primary" onClick={handleLoginClick}>
+                                Login/Signup
+                            </button>
+                            <button className="popup-button" onClick={() => setShowLoginPopup(false)}>
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );

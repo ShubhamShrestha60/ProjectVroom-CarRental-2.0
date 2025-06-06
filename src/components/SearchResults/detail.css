@@ -1,0 +1,361 @@
+.detail-page {
+    min-height: calc(100vh - 80px);
+    background-color: #f8f9fa;
+    padding: 40px;
+}
+
+.detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 50px;
+}
+
+/* Left Section - Car Details */
+.car-section {
+    flex: 1;
+}
+
+.car-image {
+    width: 100%;
+    max-width: 700px;
+    margin-bottom: 40px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+}
+
+.car-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.car-image img:hover {
+    transform: scale(1.02);
+}
+
+.car-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    padding: 30px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.info-item {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.info-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.info-item h4 {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-item p {
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Right Section - Pricing */
+.pricing-section {
+    width: 380px;
+}
+
+.pricing-card {
+    position: sticky;
+    top: 100px;
+    background: white;
+    border-radius: 16px;
+    padding: 35px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.price-display {
+    text-align: left;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #eee;
+}
+
+.price-display h1 {
+    font-size: 2.5rem;
+    color: rgb(128, 0, 0);
+    margin: 0;
+    font-weight: 600;
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    letter-spacing: -0.02em;
+}
+
+.price-display h1 span.currency {
+    font-size: 1.5rem;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+.price-display span.period {
+    display: block;
+    color: #6b7280;
+    font-size: 1rem;
+    margin-top: 8px;
+    font-weight: 500;
+}
+
+.rent-button {
+    width: 100%;
+    padding: 16px;
+    background: rgb(128, 0, 0);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(128, 0, 0, 0.15);
+}
+
+.rent-button:hover {
+    background: rgb(150, 0, 0);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(128, 0, 0, 0.2);
+}
+
+.rent-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(128, 0, 0, 0.15);
+}
+
+/* Login Popup */
+.login-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 400px;
+    z-index: 1000;
+}
+
+.login-popup::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: -1;
+}
+
+.popup-message {
+    margin: 0 0 24px 0;
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    line-height: 1.5;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.popup-button {
+    padding: 12px 24px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.popup-button.primary {
+    background: rgb(128, 0, 0);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+}
+
+.popup-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.popup-button.primary:hover {
+    background: rgb(150, 0, 0);
+    box-shadow: 0 4px 12px rgba(128, 0, 0, 0.2);
+}
+
+@media (max-width: 1200px) {
+    .detail-page {
+        padding: 40px 30px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .detail-page {
+        padding: 30px 20px;
+    }
+
+    .detail-container {
+        gap: 40px;
+    }
+
+    .car-image {
+        padding: 20px;
+    }
+
+    .pricing-section {
+        width: 340px;
+    }
+}
+
+@media (max-width: 768px) {
+    .detail-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .pricing-section {
+        width: 100%;
+    }
+
+    .pricing-card {
+        position: static;
+    }
+
+    .car-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .login-popup {
+        width: 90%;
+        max-width: 400px;
+        padding: 25px;
+    }
+}
+
+.car-header {
+    margin-bottom: 30px;
+}
+
+.car-header h1 {
+    font-size: 2.5rem;
+    color: #1a1a1a;
+    margin: 0 0 20px 0;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.car-tags {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: white;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #4a4a4a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tag svg {
+    color: rgb(128, 0, 0);
+}
+
+.info-item p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-item p svg {
+    color: rgb(128, 0, 0);
+}
+
+.pricing-info {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid #eee;
+}
+
+.pricing-info p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 12px 0;
+    color: #4a4a4a;
+    font-size: 0.95rem;
+}
+
+/* Loading State */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: 20px;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid rgb(128, 0, 0);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-state p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Popup Content */
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+} 

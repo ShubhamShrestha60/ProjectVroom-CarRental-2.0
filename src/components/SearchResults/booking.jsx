@@ -1,11 +1,10 @@
-
 // import './booking.css';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import React, { useState, useEffect} from "react";
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logo from "../Login&Signup/logo.png";
+import './booking.css';
 
 
 
@@ -17,13 +16,11 @@ export default function Booking(){
     const [image, setImage] = useState(null);
     const currentDate = new Date();
     const [pickupDate, setPickupDate] = useState(currentDate);
+    const [dropoffDate, setDropoffDate] = useState(currentDate);
 
     const defaultPickupTime = `${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}`;
     const [pickupTime, setPickupTime] = useState(defaultPickupTime);
 
-    const [dropoffDate, setDropoffDate] = useState(currentDate);
-
- 
     const defaultDropoffHour = currentDate.getHours() === 23 ? 0 : currentDate.getHours() + 1; 
     const defaultDropoffTime = `${defaultDropoffHour.toString().padStart(2, '0')}:00`;
     const [dropoffTime, setDropoffTime] = useState(defaultDropoffTime);
@@ -33,25 +30,32 @@ export default function Booking(){
     const [showPickupTimetable, setShowPickupTimetable] = useState(false);
     const [showDropoffTimetable, setShowDropoffTimetable] = useState(false);
     const [times, setTimes] = useState([]);
+    const [licenseNumber, setLicenseNumber] = useState("");
+    const [expiryDate, setExpiryDate] = useState("");
+    const [timeGapError, setTimeGapError] = useState("");
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [showEmptyFieldPopup, setShowEmptyFieldPopup] = useState(false);
+    const [bookingConfirmed, setBookingConfirmed] = useState(false);
 
     useEffect(() => {
-        // Fetch available times and filter out past times
         const fetchAvailableTimes = async () => {
-            const availableTimes = ['01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
+            const availableTimes = Array.from({ length: 24 }, (_, i) => 
+                `${i.toString().padStart(2, '0')}:00`
+            );
             const currentHour = currentDate.getHours();
             const currentMinute = currentDate.getMinutes();
             const currentHourIndex = currentHour * 60 + currentMinute;
             const filteredTimes = availableTimes.filter(time => {
-                const [hour, minute] = time.split(':');
-                const timeIndex = parseInt(hour) * 60 + parseInt(minute);
-                return timeIndex >= currentHourIndex; // Only allow times from now onwards
+                const [hour] = time.split(':');
+                const timeIndex = parseInt(hour) * 60;
+                return timeIndex >= currentHourIndex;
             });
             setTimes(filteredTimes);
         };
 
         fetchAvailableTimes();
     }, []);
-     
+
     const togglePickupCalendar = () => {
         setShowPickupCalendar(!showPickupCalendar);
     };
@@ -89,21 +93,13 @@ export default function Booking(){
         toggleDropoffTimetable();
     };
 
-    
-    const [timeGapError, setTimeGapError] = useState(""); 
-
-    const [value, setValue] = useState("");
-    const [expiryDate, setexpiryDate] = useState("");
-    const [bookingConfirmed, setBookingConfirmed] = useState(false);
-    
-
     const handleInputChange = (e) => {
         const inputValue = e.target.value;
         const regex = /^[0-9-]*$/; // Regular expression to allow numbers and certain special characters
         
         // If the input matches the regular expression or it's an empty string, update the state
         if (regex.test(inputValue) || inputValue === "") {
-            setValue(inputValue);
+            setLicenseNumber(inputValue);
         }
     };
     const handleImageChange = (e) => {
@@ -111,10 +107,10 @@ export default function Booking(){
         setImage(file);
       };
 
-      const handleExpiryDateChange = (e) => {
+    const handleExpiryDateChange = (e) => {
         const ExpiryDateValue = e.target.value;
-        setexpiryDate(ExpiryDateValue);
-      }
+        setExpiryDate(ExpiryDateValue);
+    }
 
     const styles = {
         
@@ -256,226 +252,257 @@ export default function Booking(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Create FormData object to append form data
         const formData = new FormData();
         const userEmail = localStorage.getItem('userEmail');
         const pickupLocation = localStorage.getItem('pickupLocation');
         const dropoffLocation = localStorage.getItem('dropoffLocation');
-       
-        const pickupDateString = pickupDate.toISOString(); // Ensure pickupDate is a Date object
-        const dropoffDateString = pickupDate.toISOString(); // Ensure dropoffDate is a Date object
-        
-        formData.append('email',userEmail);
+
+        const pickupDateTime = new Date(pickupDate);
+        pickupDateTime.setHours(...pickupTime.split(':'));
+        const dropoffDateTime = new Date(dropoffDate);
+        dropoffDateTime.setHours(...dropoffTime.split(':'));
+
+        formData.append('email', userEmail);
         formData.append('carID', carID);
-        formData.append('pickupLocation',pickupLocation)
-        formData.append('dropoffLocation',dropoffLocation)
-        formData.append('pickupDate', pickupDateString);  // Format date as ISO string
-       formData.append('pickupTime', pickupTime);
-       formData.append('dropoffDate', dropoffDateString); 
-       formData.append('dropoffTime', dropoffTime);
-       formData.append('LicenseNumber', value.toString()); // Convert to string if necessary
-       formData.append('ExpiryDate', expiryDate);
-        formData.append('image', image); 
-        
+        formData.append('pickupLocation', pickupLocation);
+        formData.append('dropoffLocation', dropoffLocation);
+        formData.append('pickupDate', pickupDateTime.toISOString());
+        formData.append('dropoffDate', dropoffDateTime.toISOString());
+        formData.append('LicenseNumber', licenseNumber);
+        formData.append('ExpiryDate', expiryDate);
+        formData.append('image', image);
+
         try {
-            const response = await fetch('http://localhost:3002/booking', { 
+            const response = await fetch('http://localhost:3002/booking', {
                 method: 'POST',
                 body: formData,
             });
-    
-          if (response.ok) {
-             const data = await response.json();
-             setBookingConfirmed(true);
-          console.log('Booking successfully:', data.booking);
-        //   setShowConfirmation(true);
-          } else {
-              console.error('Booking Failed:', response.statusText);
-          }
-      } catch (error) {
-          console.error('Booking Failed:', error.message);
-      }
 
-     
-    //   setShowConfirmation(true);
-      
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Booking successful:', data.booking);
+                setBookingConfirmed(true);
+            } else {
+                console.error('Booking Failed:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Booking Failed:', error.message);
+        }
     };
 
-
-    const handleError =()=>{
-
+    const validateBooking = () => {
         const pickupDateTime = new Date(`${pickupDate.toDateString()} ${pickupTime}`);
         const dropoffDateTime = new Date(`${dropoffDate.toDateString()} ${dropoffTime}`);
-     
+
         if (pickupDateTime >= dropoffDateTime) {
             setTimeGapError("Dropoff time must be later than pickup time");
-            return;
-        } else {
-            setTimeGapError(""); 
+            return false;
         }
 
-        const timeDifference = Math.abs(dropoffDateTime - pickupDateTime) / (1000 * 60 * 60); 
-
+        const timeDifference = Math.abs(dropoffDateTime - pickupDateTime) / (1000 * 60 * 60);
         if (timeDifference < 1) {
             setTimeGapError("There must be at least one hour between pickup and dropoff");
-        return;
-
-        } else {
-            setTimeGapError(""); 
+            return false;
         }
 
-    // setShowConfirmation(false); 
-    if (!value || !expiryDate || !image) {
-        setShowEmptyFieldPopup(true); // Show popup if any field is empty
-        setShowConfirmation(false);
-        return;
-    }
-    else{
-        setShowConfirmation(true);
-    }
+        if (!licenseNumber || !expiryDate || !image) {
+            setShowEmptyFieldPopup(true);
+            return false;
+        }
 
-    }
-
-    const [showConfirmation, setShowConfirmation] = useState(false);
-    const [showEmptyFieldPopup, setShowEmptyFieldPopup] = useState(false);
-
-    const handleConfirmBooking = async (e) => {
-        e.preventDefault();
-
-        setShowConfirmation(false);
-        await handleSubmit(e); 
-        
-        return;    
+        setTimeGapError("");
+        return true;
     };
-    const handleOKButtonClick = () => {
-        setBookingConfirmed(false);
+
+    const handleBookingClick = () => {
+        if (validateBooking()) {
+            setShowConfirmation(true);
+        }
     };
 
     return (
+        <div className="booking-container">
+            <div className="booking-form">
+                <img src={logo} alt="Vroom Logo" className="booking-logo" />
+                <h2 className="booking-title">Complete Your Booking</h2>
 
-        <div style={styles.container}>
-            
-            <div style={styles.form} >
-            <img src={logo} alt="" style={styles.img} />
-            <h2>Pickup Information</h2>
-                <div className='pickup_info' style={styles.pickup_info}>
-                
-                <div style={styles.pickup} className="pickup">
-                    
-                        <button onClick={togglePickupCalendar} className="button pickupdate"style={styles.button}>
-                        <p style={{ margin: "auto 0", marginTop: "8px" , fontSize:"9px"}}>Pickup date</p>
-                            <h4 style={{ margin: "auto 0", marginTop: "14px" }}>{pickupDate.toLocaleDateString()}</h4>
+                <div className="booking-section">
+                    <h3>Pickup & Return Details</h3>
+                    <div className="datetime-grid">
+                        <button 
+                            className="datetime-button"
+                            onClick={() => setShowPickupCalendar(!showPickupCalendar)}
+                        >
+                            <p>Pickup Date</p>
+                            <h4>{pickupDate.toLocaleDateString()}</h4>
+                            {showPickupCalendar && (
+                                <div className="calendar-container">
+                                    <Calendar
+                                        onChange={date => {
+                                            setPickupDate(date);
+                                            setDropoffDate(date);
+                                            setShowPickupCalendar(false);
+                                        }}
+                                        value={pickupDate}
+                                        minDate={currentDate}
+                                    />
+                                </div>
+                            )}
                         </button>
-                        {showPickupCalendar && (
-                            <div className="calendarContainer" style={styles.calendarContainer}>
-                                 <Calendar
-                                    onChange={handlePickupDateChange}
-                                    value={pickupDate}
-                                    minDate={currentDate}
-                                />
-                            </div>
-                        )}
-                        
-                        <button onClick={togglePickupTimetable} className="button pickuptime" style={styles.button}>
-                        <p style={{ margin: "auto 0", marginTop: "8px" , fontSize:"9px"}}>Pickup time</p>
-                            <h4 style={{ margin: "auto 0", marginTop: "14px" }}>{pickupTime}</h4>
+
+                        <button 
+                            className="datetime-button"
+                            onClick={() => setShowPickupTimetable(!showPickupTimetable)}
+                        >
+                            <p>Pickup Time</p>
+                            <h4>{pickupTime}</h4>
+                            {showPickupTimetable && (
+                                <div className="time-dropdown">
+                                    {times.map((time, index) => (
+                                        <div 
+                                            key={index}
+                                            onClick={() => {
+                                                setPickupTime(time);
+                                                setShowPickupTimetable(false);
+                                            }}
+                                        >
+                                            {time}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </button>
-                        {showPickupTimetable && (
-                            <div className="dropdown" style={styles.dropdown}>
-                                {times.map((time, index) => (
-                                    <div key={index} onClick={() => handlePickupTimeChange(time)}>
-                                        {time}
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
 
-
-                    <div style={styles.dropoff} className="dropoff">
-                        <button onClick={toggleDropoffCalendar} className="button dropoffdate" style={styles.button}>
-                        <p style={{ margin: "auto 0", marginTop: "8px" , fontSize:"9px"}}>Dropoff date</p>
-                            <h4 style={{ margin: "auto 0", marginTop: "14px" }}>{dropoffDate.toLocaleDateString()}</h4>
+                        <button 
+                            className="datetime-button"
+                            onClick={() => setShowDropoffCalendar(!showDropoffCalendar)}
+                        >
+                            <p>Return Date</p>
+                            <h4>{dropoffDate.toLocaleDateString()}</h4>
+                            {showDropoffCalendar && (
+                                <div className="calendar-container">
+                                    <Calendar
+                                        onChange={date => {
+                                            setDropoffDate(date);
+                                            setShowDropoffCalendar(false);
+                                        }}
+                                        value={dropoffDate}
+                                        minDate={pickupDate}
+                                    />
+                                </div>
+                            )}
                         </button>
-                        {showDropoffCalendar && (
-                            <div className="calendarContainer" style={styles.calendarContainer}>
-                                <Calendar
-                                    onChange={handleDropoffDateChange}
-                                    value={dropoffDate}
-                                    minDate={pickupDate}
-                                />
-                            </div>
-                        )}
 
-                       <button onClick={toggleDropoffTimetable} className="button dropofftime" style={styles.button}>
-                        <p style={{ margin: "auto 0", marginTop: "8px" , fontSize:"8px"}}>Dropoff time</p>
-                            <h4 style={{ margin: "auto 0", marginTop: "14px" }}>{dropoffTime}</h4>
-
+                        <button 
+                            className="datetime-button"
+                            onClick={() => setShowDropoffTimetable(!showDropoffTimetable)}
+                        >
+                            <p>Return Time</p>
+                            <h4>{dropoffTime}</h4>
+                            {showDropoffTimetable && (
+                                <div className="time-dropdown">
+                                    {times.map((time, index) => (
+                                        <div 
+                                            key={index}
+                                            onClick={() => {
+                                                setDropoffTime(time);
+                                                setShowDropoffTimetable(false);
+                                            }}
+                                        >
+                                            {time}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </button>
-                        {showDropoffTimetable && (
-                            <div className="dropdown" style={styles.dropdown}>
-                                {times.map((time, index) => (
-                                    <div key={index} onClick={() => handleDropoffTimeChange(time)}>
-                                        {time}
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                         {timeGapError && <p className="timegap_error_message" style={styles.timegap_error_message}>{timeGapError}</p>} 
                     </div>
+                    {timeGapError && <p className="error-message">{timeGapError}</p>}
+                </div>
+
+                <div className="booking-section">
+                    <h3>Driver Information</h3>
+                    <div className="license-grid">
+                        <input
+                            type="text"
+                            value={licenseNumber}
+                            onChange={handleInputChange}
+                            placeholder="License Number"
+                            className="input-field"
+                        />
+                        <input
+                            type="date"
+                            value={expiryDate}
+                            onChange={handleExpiryDateChange}
+                            className="input-field"
+                            placeholder="License Expiry Date"
+                        />
                     </div>
+                    <input
+                        type="file"
+                        onChange={handleImageChange}
+                        accept="image/*"
+                        className="file-input"
+                    />
+                </div>
 
-                    <div className='driving_detail' style={styles.driving_detail}>
-
-                      <h3>Driving Information</h3>
-
-                        {/* <div className='writing_field'> */}
-
-                       <div className='license' style={styles.license}>
-                       <input
-                              type="text"
-                              value={value}
-                              onChange={handleInputChange}
-                              placeholder="DL number"
-                              id="licenseNumber" 
-                              name="licenseNumber"
-                              style={styles.input}
-                              
-                         />
-                         <input type="date" placeholder="dd/mm/yyyy"  style={styles.input} id="expiryDate" name="expiryDate" value={expiryDate} onChange={handleExpiryDateChange}/>
-                         
-                       </div>
-
-                        <input type="file" id="image" name="image" accept="image/*" onChange={handleImageChange} style={styles.upload}  />
-                        <button onClick={handleError} className='submit' style={styles.submit}>Rent Now</button>
-              
-
-          
-          {showEmptyFieldPopup && (
-    <div className="confirmation_popup" style={styles.confirmation_popup}>
-        <p>Please fill all the fields.</p>
-        <button onClick={() => setShowEmptyFieldPopup(false)} style={{width:"70px", marginTop:"15px"}}>OK</button>
-    </div>
-           )}
-              
-            {showConfirmation &&(
-    <div className="confirmation_popup" style={styles.confirmation_popup}>
-        <p>Do you want to confirm the booking?</p>
-        <div className='option' style={styles.option}>
-            <button onClick={(e) => handleConfirmBooking(e)} style={{width:"50%"}}>Yes</button>
-            <button onClick={() => setShowConfirmation(false)} style={{width:"50%"}}>No</button>
-        </div>
-    </div>
-         )}
-               
-               {!showEmptyFieldPopup && !timeGapError && bookingConfirmed && (
-    <div className="confirmation_popup" style={styles.confirmation_popup}>
-        <h4>Your booking has been confirmed.</h4>
-        <button onClick={handleOKButtonClick} style={{width:"70px", marginTop:"15px"}}>OK</button>
-    </div>
-)}
-                    </div>
+                <button onClick={handleBookingClick} className="submit-button">
+                    Complete Booking
+                </button>
             </div>
+
+            {showEmptyFieldPopup && (
+                <div className="popup">
+                    <h3 className="popup-title">Missing Information</h3>
+                    <p>Please fill in all required fields to continue.</p>
+                    <div className="popup-buttons">
+                        <button 
+                            className="popup-button"
+                            onClick={() => setShowEmptyFieldPopup(false)}
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {showConfirmation && (
+                <div className="popup">
+                    <h3 className="popup-title">Confirm Booking</h3>
+                    <p>Are you sure you want to proceed with the booking?</p>
+                    <div className="popup-buttons">
+                        <button 
+                            className="popup-button primary"
+                            onClick={handleSubmit}
+                        >
+                            Confirm
+                        </button>
+                        <button 
+                            className="popup-button"
+                            onClick={() => setShowConfirmation(false)}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {bookingConfirmed && (
+                <div className="popup">
+                    <h3 className="popup-title">Booking Confirmed!</h3>
+                    <p>Your car rental has been successfully booked.</p>
+                    <div className="popup-buttons">
+                        <button 
+                            className="popup-button primary"
+                            onClick={() => {
+                                setBookingConfirmed(false);
+                                navigate('/profile');
+                            }}
+                        >
+                            View My Bookings
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
-
 }

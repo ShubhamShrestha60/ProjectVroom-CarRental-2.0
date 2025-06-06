@@ -1,20 +1,15 @@
 // import Login from './login.jsx'
 import React, { useState } from 'react';
 import logo from "./logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
-import { useNavigate } from "react-router-dom";
 import { Component } from "react";
 // gi is sort name of game icon.
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import './signup.css';
 
-export default function Test() {
+export default function Signup() {
   const navigate = useNavigate();
-  const [passwordError, setPasswordError] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // State to control password visibility
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to control password visibility
-  
-
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -23,8 +18,10 @@ export default function Test() {
     password: '',
     confirmPassword: ''
   });
-
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,214 +29,197 @@ export default function Test() {
       ...prevState,
       [name]: value
     }));
-  }
-   
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  }
 
-  const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  }
+    if (name === 'confirmPassword' || name === 'password') {
+      validatePasswords(name === 'password' ? value : formData.password, 
+                       name === 'confirmPassword' ? value : formData.confirmPassword);
+    }
+  };
 
-
-  const displayPasswordStrength = (password) => {
-    // Your password strength logic here
-    // Example: You can check the length of the password and render a message based on its strength
-    if (password.length < 8) {
-      return <p style={{color:"red"}}>Weak</p>;
-    } else if (password.length < 12) {
-      return <p style={{color:"black"}}>Moderate</p>;
+  const validatePasswords = (password, confirmPassword) => {
+    if (confirmPassword && password !== confirmPassword) {
+      setPasswordError('Passwords do not match');
     } else {
-      return <p style={{color:"green"}}>Strong</p>;
+      setPasswordError('');
     }
   };
 
-  const handleSubmit = (e) => {
+  const getPasswordStrength = (password) => {
+    if (!password) return '';
+    if (password.length < 8) return 'weak';
+    if (password.length < 12) return 'moderate';
+    return 'strong';
+  };
+
+  const getPasswordStrengthText = (strength) => {
+    switch (strength) {
+      case 'weak':
+        return 'Weak - Password should be at least 8 characters';
+      case 'moderate':
+        return 'Moderate - Consider using a longer password';
+      case 'strong':
+        return 'Strong password';
+      default:
+        return '';
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.password) {
-      setPasswordError('Password field should not be empty');
+    if (formData.password !== formData.confirmPassword) {
+      setPasswordError('Passwords do not match');
       return;
-    // } else if (!/^(?=.[a-z])(?=.[A-Z])(?=.*[@])(?=.{8,})/.test(formData.password)) {
-    //   setPasswordError('Password must contain at least one lowercase letter, one uppercase letter, one "@" symbol, and be at least eight characters long');
-    //   return;
     }
-    axios.post('http://localhost:3002/register', formData)
-      .then(result => {
-        console.log(result);
-        navigate('/login');
-      })
-      .catch(err => console.log(err));
-    console.log(formData);
-  };
 
-
-  const styles = {
-    container: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "100vh", // Set height to full viewport height
-    },
-    Login: {
-      width: "80%", 
-      maxWidth: "300px", 
-      backgroundColor: "#ffffff",
-      borderRadius: "10px",
-      border: "2px solid #000000", /* Adding border with color */
-      padding: "20px",
-    },
-    input: {
-      width: "100%",
-      height: "40px",
-      marginBottom: "15px",
-      border: "1px solid black",
-      borderRadius: "10px",
-      boxSizing: "border-box",
-      paddingLeft: "10px",
-    },
-    inputGroup: {
-      display: "flex",
-      marginBottom: "15px",
-    },
-    label: {
-      display: "block",
-      marginBottom: "5px",
-      fontSize: "15px",
-    },
-    button: {
-      backgroundColor: "#5CB3FF",
-      width: "100%",
-      height: "40px",
-      color: "white",
-      border: "none",
-      borderRadius: "10px",
-      cursor: "pointer",
-      marginTop: "15px",
-    },
-    img: {
-      width: "100%",
-      height: "auto",
-      marginBottom: "15px",
-    },
-    signUp: {
-      textAlign: "center",
-      fontSize: "13px",
-      marginTop: "20px",
-    },
-    password_eye:{
-      zIndex: "1001",
-      position: "absolute",
-      top: "50%",
-      right: "10px",
-      transform: "translateY(-90%)",
-      cursor: "pointer",
-    },
-    confirm_password_eye:{
-      zIndex: "1001",
-      position: "absolute",
-      top: "50%",
-      right: "10px",
-      transform: "translateY(-90%)",
-      cursor: "pointer",
+    try {
+      const response = await axios.post('http://localhost:3002/signup', formData);
+      if (response.data === "Success") {
+        setShowPopup(true);
+        setTimeout(() => {
+          setShowPopup(false);
+          navigate('/login');
+        }, 2000);
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
     }
   };
-  
-  
+
+  const passwordStrength = getPasswordStrength(formData.password);
+
   return (
-    <div style={styles.container}>
-      <form className="Login" style={styles.Login} onSubmit={handleSubmit}>
-        <img src={logo} alt="" style={styles.img} />
+    <div className="signup-container">
+      <form className="signup-form" onSubmit={handleSubmit}>
+        <img src={logo} alt="Vroom Logo" className="signup-logo" />
+        <h1 className="signup-title">Create an account</h1>
+        <p className="signup-subtitle">Please fill in your information to get started</p>
 
-        <div style={styles.inputGroup}>
-          <input type="text" style={{ ...styles.input, flex: "1", marginRight: "5px" }} name="firstName" value={formData.firstName} onChange={handleChange} placeholder="First Name" required />
-          <input type="text" style={{ ...styles.input, flex: "1", marginLeft: "5px" }} name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Last Name" required />
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="firstName" className="form-label">First Name</label>
+            <input
+              id="firstName"
+              type="text"
+              name="firstName"
+              className="form-input"
+              value={formData.firstName}
+              onChange={handleChange}
+              placeholder="Enter your first name"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="lastName" className="form-label">Last Name</label>
+            <input
+              id="lastName"
+              type="text"
+              name="lastName"
+              className="form-input"
+              value={formData.lastName}
+              onChange={handleChange}
+              placeholder="Enter your last name"
+              required
+            />
+          </div>
         </div>
 
-        <label htmlFor="phone" style={styles.label}>
-          Phone Number
-        </label>
-        <input id="phone" type="tel" style={styles.input} name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} required />
-
-        <label htmlFor="email" style={styles.label}>
-          Email
-        </label>
-        <input id="email" type="email" style={styles.input} name="email" value={formData.email} onChange={handleChange} required />
-
-        <label htmlFor="password" style={styles.label}>
-          Password
-        </label>
-        <div style={{ position: "relative" }}>
-          <input 
-            id="password" 
-            type={showPassword ? "text" : "password"} 
-            style={styles.input} 
-            name="password" 
-            value={formData.password} 
-            onChange={(e) => {
-              handleChange(e);
-              displayPasswordStrength(e.target.value);
-            }} 
-            required 
+        <div className="form-group">
+          <label htmlFor="phoneNumber" className="form-label">Phone Number</label>
+          <input
+            id="phoneNumber"
+            type="tel"
+            name="phoneNumber"
+            className="form-input"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+            placeholder="Enter your phone number"
+            required
           />
-          {showPassword ? (
-            <FaRegEye 
-            className='password_eye' 
-            style={styles.password_eye} 
-            onClick={togglePasswordVisibility} 
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="email" className="form-label">Email</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            className="form-input"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Enter your email"
+            required
           />
-            
-          ) : (
-            <FaRegEyeSlash 
-            className='password_eye' 
-            style={styles.password_eye} 
-            onClick={togglePasswordVisibility} 
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="password" className="form-label">Password</label>
+          <div className="password-input-container">
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              className="form-input"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Create a password"
+              required
             />
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowPassword(!showPassword)}
+              tabIndex="-1"
+            >
+              {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+            </button>
+          </div>
+          {formData.password && (
+            <p className={`password-strength ${passwordStrength}`}>
+              {getPasswordStrengthText(passwordStrength)}
+            </p>
           )}
         </div>
-    
-        
-        <label htmlFor="confirm-password" style={styles.label}>
-          Confirm Password
-        </label>
 
-        <div style={{position:"relative"}}>
-        <input id="confirm-password"
-         type={showConfirmPassword ? "text" : "password"} 
-         style={styles.input} 
-         name="confirmPassword" 
-         value={formData.confirmPassword} 
-         onChange={handleChange} required />
-         
-         {showConfirmPassword ? (
-            <FaRegEye 
-            className='confirm_password_eye' 
-            style={styles.confirm_password_eye} 
-            onClick={toggleConfirmPasswordVisibility} 
-          />
-            
-          ) : (
-            <FaRegEyeSlash 
-            className='confirm_password_eye' 
-            style={styles.confirm_password_eye} 
-            onClick={toggleConfirmPasswordVisibility} 
+        <div className="form-group">
+          <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+          <div className="password-input-container">
+            <input
+              id="confirmPassword"
+              type={showConfirmPassword ? "text" : "password"}
+              name="confirmPassword"
+              className="form-input"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirm your password"
+              required
             />
-          )}
-         
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              tabIndex="-1"
+            >
+              {showConfirmPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+            </button>
+          </div>
+          {passwordError && <p className="error-message">{passwordError}</p>}
+        </div>
 
-       </div>
-        
-       
-        <p id="passwordStrength">{displayPasswordStrength(formData.password)}</p>
+        <button type="submit" className="signup-button">
+          Create Account
+        </button>
 
-        {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
-
-        <button type="submit" style={styles.button}>Register</button>
-        <p style={styles.signUp}>
-          Already have an account? <span style={{ color: "#5CB3FF" }}><Link to="/login">Login</Link></span>
+        <p className="login-link">
+          Already have an account? <Link to="/login">Sign in</Link>
         </p>
-
       </form>
+
+      {showPopup && (
+        <div className="success-popup">
+          <p>Account created successfully!</p>
+        </div>
+      )}
     </div>
   );
 }

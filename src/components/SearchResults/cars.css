@@ -1,0 +1,237 @@
+.cars-page {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 40px;
+}
+
+.cars-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 50px;
+}
+
+/* Filter Section */
+.filter-section {
+    width: 300px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+}
+
+.filter-group {
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 25px;
+}
+
+.filter-group:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.filter-title {
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 8px 0;
+    transition: all 0.2s ease;
+}
+
+.filter-option:hover {
+    transform: translateX(5px);
+}
+
+.filter-checkbox {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: rgb(128, 0, 0);
+    cursor: pointer;
+}
+
+.filter-label {
+    font-size: 0.95rem;
+    color: #4a4a4a;
+    cursor: pointer;
+}
+
+/* Listing Section */
+.listing-section {
+    flex: 1;
+}
+
+.results-count {
+    margin: 0 0 25px 0;
+    font-size: 0.95rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.car-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.car-card {
+    display: flex;
+    gap: 25px;
+    padding: 25px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.car-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    border-color: rgba(128, 0, 0, 0.1);
+}
+
+.listing-car-image {
+    width: 220px;
+    height: 140px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.car-details {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.car-info h3 {
+    margin: 0 0 12px 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: -0.01em;
+}
+
+.car-specs {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #666;
+    display: flex;
+    gap: 15px;
+}
+
+.car-specs span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.car-price-section {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.car-price {
+    margin: 0 0 15px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: rgb(128, 0, 0);
+}
+
+.view-details-btn {
+    color: white;
+    text-decoration: none;
+    font-size: 0.95rem;
+    background: rgb(128, 0, 0);
+    padding: 10px 20px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.view-details-btn:hover {
+    background: rgb(150, 0, 0);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 1200px) {
+    .cars-page {
+        padding: 40px 30px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .cars-page {
+        padding: 30px 20px;
+    }
+
+    .cars-container {
+        gap: 40px;
+    }
+
+    .listing-car-image {
+        width: 180px;
+        height: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cars-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .filter-section {
+        width: 100%;
+        position: static;
+    }
+
+    .car-card {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .listing-car-image {
+        width: 100%;
+        height: 200px;
+    }
+
+    .car-details {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .car-price-section {
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .car-price {
+        margin-bottom: 12px;
+    }
+} 

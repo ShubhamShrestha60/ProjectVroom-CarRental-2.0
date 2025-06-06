@@ -1,42 +1,69 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom'; 
-import "./footer.css";
+import './footer.css';
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
-export const Footer = () => {
-  const location = useLocation();
-  // Define an array of paths where you want to hide the footer
-  const hiddenPaths = ['/login', '/signup', '/dashboard','/settings','/addCar','/adminlogin','/adminSignup','/adminsignup','/adminLogin','/booking','/adminbookings','/available','/notification','/carmanagement'];
+const Footer = () => {
+    return (
+        <footer className="footer">
+            <div className="footer-container">
+                <div className="footer-content">
+                    <div className="footer-section">
+                        <h4>ProjectVroom</h4>
+                        <p>Experience the freedom of premium car rentals with our seamless booking platform. Drive in style, comfort, and confidence.</p>
+                        <div className="social-links">
+                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                                <FaFacebookF />
+                            </a>
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                                <FaTwitter />
+                            </a>
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                                <FaInstagram />
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                                <FaLinkedinIn />
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div className="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul className="footer-links">
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/about">About Us</Link></li>
+                            <li><Link to="/cars">Our Fleet</Link></li>
+                            <li><Link to="/contact">Contact</Link></li>
+                        </ul>
+                    </div>
 
-  // Check if the current location is in the array of hidden paths
-  const isHidden = hiddenPaths.includes(location.pathname);
+                    <div className="footer-section">
+                        <h4>Services</h4>
+                        <ul className="footer-links">
+                            <li><Link to="/services">Car Rental</Link></li>
+                            <li><Link to="/chauffeur">Chauffeur Service</Link></li>
+                            <li><Link to="/airport">Airport Transfer</Link></li>
+                            <li><Link to="/corporate">Corporate Rental</Link></li>
+                        </ul>
+                    </div>
 
-  // If the current path is in the hiddenPaths array, don't render the footer
-  if (isHidden) {
-    return null;
-  }
-  return (
-    <div className='footer_main'>
-    <footer className="footer">
-      <div className="container">
-        <div className="left-content">
-          <h2 style={{color:"white"}}>Vroom</h2>
-          <p className="sub-text">YOUR TRUSTED CAR RENTAL.</p> 
-        </div>
-        <div className="right-content">
-          <div className="footer-links">
-            <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">FAQ</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-    </footer>
-    </div>
-  );
-} 
-export default Footer;
+                    <div className="footer-section">
+                        <h4>Support</h4>
+                        <ul className="footer-links">
+                            <li><Link to="/faq">FAQ</Link></li>
+                            <li><Link to="/terms">Terms of Service</Link></li>
+                            <li><Link to="/privacy">Privacy Policy</Link></li>
+                            <li><Link to="/help">Help Center</Link></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div className="footer-bottom">
+                    <p>&copy; {new Date().getFullYear()} ProjectVroom. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    );
+};
+
+export { Footer };

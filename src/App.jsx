@@ -20,6 +20,16 @@ import Detail from "./components/SearchResults/detail";
 import AdminBookings from "./components/pages/adminBookings";
 import CarManagement from "./components/pages/carManagement";
 
+const AdminLayout = ({ children }) => {
+  return (
+    <div style={{ paddingLeft: "210px", paddingTop: "80px" }}>
+      <Sidebar />
+      <TopNav />
+      {children}
+    </div>
+  );
+};
+
 export default function App() {
   const [results, setResults] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -43,82 +53,38 @@ export default function App() {
       }
     }
   }, []);
+  
   return (
     <div>
       <BrowserRouter>
         <Navbar isLoggedIn={isLoggedIn} />
-        <Routes>
-         <Route path="/" element = {<Home setResults={setResults} />}/>
-         <Route path="/home" element = {<Home setResults={setResults} />}/>
-         <Route
-          path="/cars"
-          element={<Cars results={results} />}
-        />
-        <Route path="/detail/:carID" element={<Detail />} />
-        <Route path="/booking" element={<Bookings />} />
-      
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login  setIsLoggedIn={setIsLoggedIn}/>} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/available" element={<AvailableLayout />} />
-          <Route path="/carmanagement" element={<CarManagementLayout />} />
-          <Route path="/adminbookings" element={<AdminBookingLayout />} />
-          <Route path="/bookings" element={<AdminBookingLayout />} />
-          <Route path="/dashboard" element={<DashboardLayout />} />
-          <Route path="/addcar" element={<AddCarLayout />} />
-          <Route path="/adminSignup" element={<AdminSignup />} />
-          <Route path="/adminLogin" element={<AdminLogin />} />
-        </Routes>
+        <main>
+          <Routes>
+            {/* Home pages without top padding */}
+            <Route path="/" element={<Home setResults={setResults} />} />
+            <Route path="/home" element={<Home setResults={setResults} />} />
+
+            {/* Regular pages with top padding */}
+            <Route path="/cars" element={<div style={{ paddingTop: "80px" }}><Cars results={results} /></div>} />
+            <Route path="/detail/:carID" element={<div style={{ paddingTop: "80px" }}><Detail /></div>} />
+            <Route path="/booking" element={<div style={{ paddingTop: "80px" }}><Bookings /></div>} />
+            <Route path="/signup" element={<div style={{ paddingTop: "80px" }}><Signup /></div>} />
+            <Route path="/login" element={<div style={{ paddingTop: "80px" }}><Login setIsLoggedIn={setIsLoggedIn}/></div>} />
+            <Route path="/profile" element={<div style={{ paddingTop: "80px" }}><Profile /></div>} />
+            <Route path="/adminSignup" element={<div style={{ paddingTop: "80px" }}><AdminSignup /></div>} />
+            <Route path="/adminLogin" element={<div style={{ paddingTop: "80px" }}><AdminLogin /></div>} />
+            
+            {/* Admin pages with sidebar */}
+            <Route path="/available" element={<AdminLayout><Available /></AdminLayout>} />
+            <Route path="/carmanagement" element={<AdminLayout><CarManagement /></AdminLayout>} />
+            <Route path="/adminbookings" element={<AdminLayout><AdminBookings /></AdminLayout>} />
+            <Route path="/bookings" element={<AdminLayout><AdminBookings /></AdminLayout>} />
+            <Route path="/dashboard" element={<AdminLayout><Dashboard /></AdminLayout>} />
+            <Route path="/addcar" element={<AdminLayout><AddCar /></AdminLayout>} />
+          </Routes>
+        </main>
         <Footer />
       </BrowserRouter>
     </div>
   );
 }
-
-const AdminBookingLayout = () => {
-  return (
-    <>
-      <Sidebar />
-      <TopNav />
-      <AdminBookings />
-    </>
-  );
-};
-const AvailableLayout = () => {
-  return (
-    <>
-      <Sidebar />
-      <TopNav />
-      <Available />
-    </>
-  );
-};
-const CarManagementLayout = () => {
-  return (
-    <>
-      <Sidebar />
-      <TopNav />
-      < CarManagement/>
-    </>
-  );
-};
-
-const DashboardLayout = () => {
-
-  return (
-    <>
-      <Sidebar />
-      <TopNav />
-      <Dashboard />
-    </>
-  );
-};
-const AddCarLayout = () => {
-  return (
-    <>
-      <Sidebar />
-      <TopNav />
-      <AddCar />
-    </>
-  );
-};

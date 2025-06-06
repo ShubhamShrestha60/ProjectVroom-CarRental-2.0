@@ -1,94 +1,60 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
+import { FaGasPump, FaCar, FaCogs } from "react-icons/fa";
 
 const Listing = ({ results }) => {
   const carCount = results.length;
 
-  const styles = {
-    main: {
-      backgroundColor: "white",
-      color: "black",
-      minWidth: "750px",
-      minHeight: "600px",
-    },
-    carDetail: {
-      display: "flex",
-      flexDirection: "row",
-      backgroundColor: "white",
-      width: "80%",
-      border: "3px solid white",
-      borderRadius: "10px",
-      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-      margin: "20px 0px 0 20px",
-      height: "120px",
-    },
-    img: {
-      flex: "0.2",
-      width: "170px",
-      height: "110px",
-      paddingRight:"20px"
-    },
-    first: {
-      flex: "0.5",
-    
-    },
-    second: {
-      flex: "0.5",
-      textAlign: "right",
-      marginRight: "20px",
-     
-    },
-    hero: {
-      display: "grid",
-      gridTemplateRows: "1fr",
-      marginTop: "-100px",
-    },
-  };
-
   return (
-    <div className="main" style={styles.main}>
-      <p style={{ margin: "40px 0 0 20px" }}>
-        <span>{carCount}</span> Cars found
-      </p>
+    <div className="listing-section">
+      <p className="results-count">{carCount} Car{carCount !== 1 && 's'} found</p>
 
       {carCount > 0 ? (
-        <div className="hero">
+        <div className="car-grid">
           {results.map((car) => (
-            <div key={car.id} className="carDetail" style={styles.carDetail}>
+            <div key={car.id} className="car-card">
               <img
-                style={styles.img}
+                className="listing-car-image"
                 src={`http://localhost:3002/${car.imageUrl}`}
-                
-                alt={`Image of ${car.brand}`}
+                alt={car.brand}
               />
-              <div className="first" style={styles.first}>
-                <h4>Brand: {car.brand}</h4>
-                <p>Fuel Type: {car.fuelType}</p>
-                <p style={{ marginTop: "-15px" }}>
-                  Transistion Type: {car.transitionType}
-                </p>
-              </div>
-
-              <div className="second" style={styles.second}>
-                <h3> Rs {car.price}</h3>
-                <h4 style={{ marginTop: "30px" }}>
-                  <Link to={`/detail/${car.carID}`}>View Detail</Link>
-                </h4>
+              <div className="car-details">
+                <div className="car-info">
+                  <h3>{car.brand}</h3>
+                  <p className="car-specs">
+                    <span><FaGasPump /> {car.fuelType}</span>
+                    <span><FaCogs /> {car.transitionType}</span>
+                    <span><FaCar /> {car.segment}</span>
+                  </p>
+                </div>
+                <div className="car-price-section">
+                  <p className="car-price">Rs{car.price}/day</p>
+                  <Link to={`/detail/${car.carID}`} className="view-details-btn">
+                    View Details
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p></p>
+        <div style={{ 
+          textAlign: 'center', 
+          padding: '40px 20px',
+          background: 'white',
+          borderRadius: '12px',
+          color: '#666'
+        }}>
+          No cars found matching your criteria
+        </div>
       )}
     </div>
   );
 };
 
-// PropTypes validation
 Listing.propTypes = {
-  results: PropTypes.array.isRequired, 
+  results: PropTypes.array.isRequired,
 };
 
 export default Listing;
