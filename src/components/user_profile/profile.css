@@ -1,0 +1,101 @@
+
+.profile_main{
+
+    background-color: white;
+    height: auto;
+    margin-bottom: 30px;
+    min-height: 350px;
+   
+}
+
+.car_rented{
+    /* background-color: yellow; */
+    height: auto;
+    margin: 50px 0 0 100px;
+   
+}
+
+
+.zero{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    /* padding: 20px; */
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+.bookingcarDetail img{
+    
+    width: 200px;
+    height: 150px;
+    border-radius: 20px;
+}
+
+.logout{
+    
+    width: 100%;
+    margin: 50px 0 0 100px;
+}
+.logout_submit{
+    margin-top: 20px;
+   margin-right: 100vw;
+    width: 100px;
+}
+
+.logout_submit:hover{
+    background-color: maroon;
+    color: white;
+}
+
+.logout_confirmation_popup{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    
+}
+
+.logout_option{
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 2.5vw;
+   margin-top:20px;
+   width: 100px;
+}
+.logout_option button:hover{
+    background-color: maroon;
+    color: white;
+}
+
+.booking_delete{
+    float: left;
+    font-size: 15px;
+    padding: 10px;
+    height: 30px;
+}
+
+.booking_delete:hover{
+    background-color: maroon;
+    color: white;
+}
+.cancellation_message{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}

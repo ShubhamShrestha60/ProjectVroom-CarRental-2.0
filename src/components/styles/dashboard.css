@@ -1,0 +1,115 @@
+/* dashboard.css */
+
+.dashboard {
+  margin-top: 100px;
+  padding: 0px 30px;
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  margin-left: 260px; /* Adjust this value according to your sidebar width */
+  margin-top: 70px; /* Set margin-top to match the height of your top navigation bar */
+}
+
+.dashboard__wrapper {
+  width: 100%; /* Full width of the container */
+  max-width: 1200px; /* Optional: Set a maximum width */
+}
+
+.dashboard__cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px; /* Adjust the gap between grid items */
+}
+
+.single__card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #f0f0f0; /* Default background color */
+}
+
+.single__card .card__content {
+  text-align: center; /* Center content within the card */
+}
+
+.single__card h4 {
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.single__card span {
+  color: #666;
+  font-size: 1rem;
+}
+
+.card__image img {
+  width: 100%; /* Ensure the image fills the container */
+  border-radius: 5px;
+}
+
+/* Styling specific cards based on data */
+.single__card:nth-child(1) {
+  background: linear-gradient(#ef621c, #e1424e);
+  color: #fff;
+}
+
+.single__card:nth-child(2) {
+  background: linear-gradient(#01d293, #56c57a);
+  color: #fff;
+}
+
+.single__card:nth-child(3) {
+  background: #725cff;
+  color: #fff;
+}
+
+.single__card:nth-child(4) {
+  background: #2884ff;
+  color: #fff;
+}
+
+/* Styling for the card displaying total cars */
+.total__card {
+  background: #4caf50; /* Green background for the total cars card */
+  color: #fff;
+}
+
+.total__card button {
+  margin-top: 10px; /* Add space between total count and button */
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #4caf50;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.total__card button:hover {
+  background-color: #e0e0e0;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.pagination button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background-color: #f0f0f0;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: #fff;
+}

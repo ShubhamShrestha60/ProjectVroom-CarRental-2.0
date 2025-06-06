@@ -1,0 +1,62 @@
+/* .body{
+ background-color:  #0b0c28;
+} */
+
+.add-car {
+  background: #181b3a;
+  padding: 30px;
+  border-radius: 5px;
+  margin-left: 260px; /* Adjust this value according to your sidebar width */
+  margin-top: 70px; /* Set margin-top to match the height of your top navigation bar */
+}
+
+  
+  .add-car__title {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  
+  .add-car__form {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 15px;
+  }
+  
+  .add-car__form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .add-car__form-group label {
+    color: #fff;
+    margin-bottom: 5px;
+  }
+  
+  .add-car__form-group input {
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+  }
+  
+  .add-car__submit-btn {
+    padding: 10px 20px;
+    background: var(--button-bg-color);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .add-car__submit-btn:hover {
+    background: var(--button-hover-bg-color);
+  }
+  
+  @media (max-width: 768px) {
+    .add-car {
+      margin-left: 0; /* Reset margin for smaller screens */
+      margin-top: 0; /* Reset margin-top for smaller screens */
+    }
+  }
